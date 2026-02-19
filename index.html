@@ -366,6 +366,18 @@
             display: none;
         }
 
+        .biodata-input-divider {
+            display: flex;
+        }
+
+        .biodata-input-divider .divider-1 {
+            margin-right: 2px;
+        }
+
+        .biodata-input-divider .divider-2 {
+            margin-left: 5px;
+        }
+
         /* Responsive for mobile */
         @media screen and (max-width: 480px) {
             .form-buttons {
@@ -389,7 +401,6 @@
             margin-bottom: 0.4rem;
             font-weight: 500;
             display: block;
-            font-family: 'Axiforma', Arial;
         }
 
         .sub-head {
@@ -408,7 +419,6 @@
         textarea,
         select option {
             color: #000;
-            font-family: 'Axiforma';
         }
 
         .biodata-input.input-css {
@@ -475,7 +485,7 @@
         span.start-title {
             color: #FFEDE1;
             text-transform: none;
-            font-family: 'Playfair Display', Arial;
+            font-family: 'Playfair Display';
             font-style: italic;
             font-weight: 500;
         }
@@ -585,14 +595,15 @@
 </head>
 
 <body>
-    <div class="form-container new-bg">
+    <form class="form-container new-bg" id="biodataForm">
         <!-- Step 1: Start -->
         <div class="form-step step-0" data-step="1">
-            <img src="https://urbanmatch-biodata.vercel.app/logo.svg" class="logo" alt="">
+            <img src="https://www.urbanmatch-biodata.vercel.app/logo.svg" class="logo" alt="">
             <h2 class="header-title">Define Yourself, <span class="start-title"> Define Your Match </span></h2>
-            <h5 class="heading-46 sub-head">From your journey so far to your partner expectations - everything in one
+            <h5 class="heading-46 sub-head">From your journey so far to your partner expectations - everything in
+                one
                 place for the perfect match</h5>
-            <img src="https://urbanmatch-biodata.vercel.app/heart.svg" class="start-heart" alt="">
+            <img src="https://www.urbanmatch-biodata.vercel.app/heart.svg" class="start-heart" alt="">
             <button type="button" id="start-btn">Start Your Biodata</button>
         </div>
 
@@ -603,26 +614,36 @@
             <div class="form-field">
 
                 <label class="lable-input">Full Name<span class="text-span-48"> *</span></label>
-                <input id="full-name" class="biodata-input input-css" type="text" name="full-name">
+                <div class="biodata-input-divider">
+                    <div>
+
+                        <input id="full-name-first" class="biodata-input divider-1 input-css" type="text"
+                            name="full-name-first" placeholder="First Name" required>
+                    </div>
+                    <div class="exclude-backend">
+                        <input id="full-name-last" class="biodata-input divider-2 input-css" type="text"
+                            name="full-name-last" placeholder="Surname" required>
+                    </div>
+                </div>
 
                 <label class="lable-input">Place of Birth<span class="text-span-48"> *</span></label>
-                <input id="place-of-birth" class="biodata-input input-css" type="text" name="place-of-birth">
+                <input id="place-of-birth" class="biodata-input input-css" type="text" name="place-of-birth" required>
 
                 <label class="lable-input">Date of Birth<span class="text-span-48"> *</span></label>
-                <input id="dob-day" class="biodata-input input-css" type="date" name="dob-time">
+                <input id="dob-day" class="biodata-input input-css" type="date" name="dob-time" required>
 
                 <label class="lable-input">Time of Birth<span class="text-span-48"> *</span></label>
-                <input id="dob-time" class="biodata-input input-css" type="time" name="dob-time">
+                <input id="dob-time" class="biodata-input input-css" type="time" name="dob-time" required>
 
                 <label class="lable-input">Gender<span class="text-span-48"> *</span></label>
-                <select id="gender" class="biodata-input input-css" name="gender">
+                <select id="gender" class="biodata-input input-css" name="gender" required>
                     <option value="" disabled selected hidden>Select Gender</option>
                     <option>Male</option>
                     <option>Female</option>
                 </select>
 
                 <label class="lable-input">Marital Status<span class="text-span-48"> *</span></label>
-                <select id="Marital-Status" class="biodata-input input-css" name="Marital-Status">
+                <select id="marital-status" class="biodata-input input-css" name="marital-status" required>
                     <option value="" disabled selected hidden>Select Marital Status</option>
                     <option>Never Married</option>
                     <option>Divorced</option>
@@ -632,7 +653,7 @@
 
 
                 <label class="lable-input">Religion<span class="text-span-48"> *</span></label>
-                <select id="religion" class="biodata-input input-css" name="religion">
+                <select id="religion" class="biodata-input input-css" name="religion" required>
                     <option value="" disabled selected hidden>Select Religion</option>
                     <option>Hindu</option>
                     <option>Sikh</option>
@@ -651,21 +672,52 @@
                 <input id="caste" class="biodata-input input-css" type="text" name="caste">
 
                 <label class="lable-input">Height<span class="text-span-48"> *</span></label>
-                <select id="Height" class="biodata-input input-css" name="Height">
+                <select id="height" class="biodata-input input-css" name="height" required>
                     <option value="" disabled selected hidden>Select Height</option>
-                    <option>Below 5'0"</option>
-                    <option>5'0" – 5'3"</option>
-                    <option>5'4" – 5'6"</option>
-                    <option>5'7" – 5'9"</option>
-                    <option>5'10" – 6'0"</option>
-                    <option>Above 6'0"</option>
+                    <option>4'0"</option>
+                    <option>4'1"</option>
+                    <option>4'2"</option>
+                    <option>4'3"</option>
+                    <option>4'4"</option>
+                    <option>4'5"</option>
+                    <option>4'6"</option>
+                    <option>4'7"</option>
+                    <option>4'8"</option>
+                    <option>4'9"</option>
+                    <option>4'10"</option>
+                    <option>4'11"</option>
+                    <option>5'0"</option>
+                    <option>5'1"</option>
+                    <option>5'2"</option>
+                    <option>5'3"</option>
+                    <option>5'4"</option>
+                    <option>5'5"</option>
+                    <option>5'6"</option>
+                    <option>5'7"</option>
+                    <option>5'8"</option>
+                    <option>5'9"</option>
+                    <option>5'10"</option>
+                    <option>5'11"</option>
+                    <option>6'0"</option>
+                    <option>6'1"</option>
+                    <option>6'2"</option>
+                    <option>6'3"</option>
+                    <option>6'4"</option>
+                    <option>6'5"</option>
+                    <option>6'6"</option>
+                    <option>6'7"</option>
+                    <option>6'8"</option>
+                    <option>6'9"</option>
+                    <option>6'10"</option>
+                    <option>6'11"</option>
+                    <option>7'0"</option>
                 </select>
 
                 <label class="lable-input">Weight<span class="text-span-48"> *</span></label>
-                <input id="Weight" class="biodata-input input-css" type="text" name="Weight">
+                <input id="Weight" class="biodata-input input-css" type="number" name="Weight" required>
 
                 <label class="lable-input">Complexion<span class="text-span-48"> *</span></label>
-                <select id="complexion" class="biodata-input input-css" name="complexion">
+                <select id="complexion" class="biodata-input input-css" name="complexion" required>
                     <option value="" disabled selected hidden>Select Complexion</option>
                     <option>Fair</option>
                     <option>Wheatish</option>
@@ -676,7 +728,8 @@
                 </select>
 
                 <label class="lable-input">When it comes to the menu<span class="text-span-48"> *</span></label>
-                <select id="food-preference-personal" class="biodata-input input-css" name="food-preference-personal">
+                <select id="food-preference-personal" class="biodata-input input-css" name="food-preference-personal"
+                    required>
                     <option value="" disabled selected hidden>Select Food Preference</option>
                     <option>Vegetarian / Vegan</option>
                     <option>Eggetarian / Pescetarian</option>
@@ -684,14 +737,14 @@
                 </select>
 
                 <label class="lable-input">Do you smoke or vape?<span class="text-span-48"> *</span></label>
-                <select id="Smoking" class="biodata-input input-css" name="Smoking">
+                <select id="Smoking" class="biodata-input input-css" name="Smoking" required>
                     <option value="" disabled selected hidden>Select</option>
                     <option>Yes</option>
                     <option>No</option>
                 </select>
 
                 <label class="lable-input">Do you drink?<span class="text-span-48"> *</span></label>
-                <select id="Drinking" class="biodata-input input-css" name="Drinking">
+                <select id="Drinking" class="biodata-input input-css" name="Drinking" required>
                     <option value="" disabled selected hidden>Select</option>
                     <option>Yes</option>
                     <option>No</option>
@@ -707,19 +760,20 @@
             <h5 class="heading-46 sub-head">Help us understand the real you</h5>
             <div class="form-field">
 
-                <label class="lable-input">What are your hobbies/passions?<span class="text-span-48"> *</span></label>
-                <textarea id="Hobby-Passion" class="biodata-input input-css" name="Hobby-Passion"></textarea>
+                <label class="lable-input">What are your hobbies/passions?<span class="text-span-48">
+                        *</span></label>
+                <textarea id="Hobby-Passion" class="biodata-input input-css" name="Hobby-Passion" required></textarea>
 
                 <label class="lable-input">Words your friends would use to describe you</label>
                 <input id="3-words" class="biodata-input input-css" type="text" name="3-words">
 
                 <label class="lable-input">Languages you speak fluently<span class="text-span-48"> *</span></label>
                 <input id="languages-spoken-fluently" class="biodata-input input-css" type="text"
-                    name="languages-spoken-fluently">
+                    name="languages-spoken-fluently" required>
 
                 <label class="lable-input">Anything special or unique about your personality?<span class="text-span-48">
                         *</span></label>
-                <textarea id="unique-traits" class="biodata-input input-css" name="unique-traits"></textarea>
+                <textarea id="unique-traits" class="biodata-input input-css" name="unique-traits" required></textarea>
 
             </div>
         </div>
@@ -733,18 +787,20 @@
 
                 <label class="lable-input">Course(s) Completed<span class="text-span-48"> *</span></label>
                 <input id="Course-Completed" class="biodata-input input-css" type="text" name="Course-Completed"
-                    placeholder="List your main courses or degrees (e.g., Bachelor’s, Master’s, Diploma)">
+                    placeholder="List your main courses or degrees (e.g., Bachelor’s, Master’s, Diploma)" required>
 
-                <label class="lable-input">Institution(s) / University(ies)<span class="text-span-48"> *</span></label>
+                <label class="lable-input">Institution(s) / University(ies)<span class="text-span-48">
+                        *</span></label>
                 <input id="Institution" class="biodata-input input-css" type="text" name="Institution"
-                    placeholder="Enter the name of your institution or university">
+                    placeholder="Enter the name of your institution or university" required>
 
                 <label class="lable-input">Year(s) of Completion<span class="text-span-48"> *</span></label>
                 <input id="Year-of-Graduation" class="biodata-input input-css" type="text" name="Year-of-Graduation"
-                    placeholder="Enter the year(s) (e.g., 2023, 2017)">
+                    placeholder="Enter the year(s) (e.g., 2023, 2017)" required>
 
                 <label class="lable-input">Current Occupation<span class="text-span-48"> *</span></label>
-                <input id="current-occupation" class="biodata-input input-css" type="text" name="current-occupation">
+                <input id="current-occupation" class="biodata-input input-css" type="text" name="current-occupation"
+                    required>
 
                 <label class="lable-input">Name of Company/Organization</label>
                 <input id="company-name" class="biodata-input input-css" type="text" name="company-name">
@@ -757,7 +813,7 @@
 
                 <label class="lable-input">What's your annual income? <span class="text-span-48"> *</span></label>
                 <div class="annual-income">
-                    <select class="biodata-input input-css" name="income-currency" id="income-currency">
+                    <select class="biodata-input input-css" name="income-currency" id="income-currency" required>
                         <option value="" disabled selected hidden>Select Currency</option>
 
                         <option value="USD">USD ($) - US Dollar</option>
@@ -775,7 +831,7 @@
 
 
                 <label class="lable-input">Country of Residence<span class="text-span-48"> *</span></label>
-                <select class="biodata-input input-css" name="Country-of-Residence" id="Country-of-Residence">
+                <select class="biodata-input input-css" name="Country-of-Residence" id="Country-of-Residence" required>
                     <option value="" disabled selected hidden>Select Currency</option>
                     <option value="AF">Afghanistan</option>
                     <option value="AX">Åland Islands</option>
@@ -1036,7 +1092,8 @@
                     <!-- Step 1: Citizenship -->
                     <select id="citizenship" name="citizenship" class="input-css biodata-input">
                         <option value="">Select your citizenship</option>
-                        <option value="Indian Citizen - Resident in India">Indian Citizen – Resident in India</option>
+                        <option value="Indian Citizen - Resident in India">Indian Citizen – Resident in India
+                        </option>
                         <option value="Indian Citizen - Living Abroad">Indian Citizen – Living Abroad</option>
                         <option value="OCI / PIO">OCI / PIO</option>
                         <option value="Permanent Resident">Permanent Resident</option>
@@ -1098,22 +1155,34 @@
             <div class="form-field">
 
                 <label class="lable-input">Father's Name<span class="text-span-48"> *</span></label>
-                <input id="Father-s-Name" class="biodata-input input-css" type="text" name="Father-s-Name">
+                <div class="biodata-input-divider">
+                    <input id="Father-s-Name-first" class="biodata-input divider-1  input-css" type="text"
+                        name="Father-s-Name-first" placeholder="First Name" required>
+                    <input id="Father-s-Name-last" class="biodata-input divider-2  input-css" type="text"
+                        name="Father-s-Name-last" placeholder="Surname" required>
+                </div>
 
                 <label class="lable-input">Father's Occupation<span class="text-span-48"> *</span></label>
-                <input id="Father-s-Occupation" class="biodata-input input-css" type="text" name="Father-s-Occupation">
+                <input id="Father-s-Occupation" class="biodata-input input-css" type="text" name="Father-s-Occupation"
+                    required>
 
                 <label class="lable-input">Mother's Name<span class="text-span-48"> *</span></label>
-                <input id="Mother-s-Name" class="biodata-input input-css" type="text" name="Mother-s-Name">
+                <div class="biodata-input-divider">
+                    <input id="Mother-s-Name-first" class="biodata-input divider-1  input-css" type="text"
+                        name="Mother-s-Name-first" placeholder="First Name" required>
+                    <input id="Mother-s-Name-last" class="biodata-input divider-2  input-css" type="text"
+                        name="Mother-s-Name-last" placeholder="Surname" required>
+                </div>
 
                 <label class="lable-input">Mother's Occupation<span class="text-span-48"> *</span></label>
-                <input id="Mother-s-Occupation" class="biodata-input input-css" type="text" name="Mother-s-Occupation">
+                <input id="Mother-s-Occupation" class="biodata-input input-css" type="text" name="Mother-s-Occupation"
+                    required>
 
                 <label class="lable-input">Sibling(s) – Name(s), Age, Occupation</label>
                 <textarea id="sibling-details" class="biodata-input input-css" name="sibling-details"></textarea>
 
                 <label class="lable-input">Family Type<span class="text-span-48"> *</span></label>
-                <select id="Family-Type" class="biodata-input input-css" name="Family-Type">
+                <select id="Family-Type" class="biodata-input input-css" name="Family-Type" required>
                     <option value="">Select</option>
                     <option>Nuclear</option>
                     <option>Joint</option>
@@ -1135,19 +1204,20 @@
             <div class="form-field">
 
                 <label class="lable-input">Your Residential Address<span class="text-span-48"> *</span></label>
-                <textarea id="Residential-Address" class="biodata-input input-css"
-                    name="Residential-Address"></textarea>
+                <textarea id="Residential-Address" class="biodata-input input-css" name="Residential-Address"
+                    required></textarea>
 
                 <label class="lable-input">Your Permanent Address<span class="text-span-48"> *</span></label>
-                <textarea id="Permanent-Address" class="biodata-input input-css" name="Permanent-Address"></textarea>
+                <textarea id="Permanent-Address" class="biodata-input input-css" name="Permanent-Address"
+                    required></textarea>
 
                 <label class="lable-input">Your Email ID<span class="text-span-48"> *</span></label>
-                <input id="Email-ID" class="biodata-input input-css" type="email" name="Email-ID">
+                <input id="Email-ID" class="biodata-input input-css" type="email" name="Email-ID" required>
 
                 <label class="lable-input">Your Whatsapp No (add country code)<span class="text-span-48">
                         *</span></label>
                 <input id="whatsapp-no" class="biodata-input input-css" type="text" name="whatsapp-no"
-                    placeholder="+91, +1 etc">
+                    placeholder="+91, +1 etc" required>
 
             </div>
         </div>
@@ -1162,7 +1232,7 @@
                 <!-- Slot 1 -->
                 <div class="photo-slot">
                     <label for="photo-upload-1">Upload Headshots</label>
-                    <input type="file" id="photo-upload-1" name="photo-1" accept="image/*">
+                    <input type="file" id="photo-upload-1" name="photo-1" accept="image/*" required>
                     <div id="photo-preview-area-1" class="photo-preview-area circle"
                         onclick="document.getElementById('photo-upload-1').click()">
                         <p id="photo-preview-text-1">Upload Headshot</p>
@@ -1173,7 +1243,7 @@
                 <!-- Slot 2 -->
                 <div class="photo-slot">
                     <label for="photo-upload-2">Upload Portrait</label>
-                    <input type="file" id="photo-upload-2" name="photo-2" accept="image/*">
+                    <input type="file" id="photo-upload-2" name="photo-2" accept="image/*" required>
                     <div id="photo-preview-area-2" class="photo-preview-area circle"
                         onclick="document.getElementById('photo-upload-2').click()">
                         <p id="photo-preview-text-2">Upload Portrait</p>
@@ -1184,7 +1254,7 @@
                 <!-- Slot 3 -->
                 <div class="photo-slot">
                     <label for="photo-upload-3">Upload Casual Photo</label>
-                    <input type="file" id="photo-upload-3" name="photo-3" accept="image/*">
+                    <input type="file" id="photo-upload-3" name="photo-3" accept="image/*" required>
                     <div id="photo-preview-area-3" class="photo-preview-area circle"
                         onclick="document.getElementById('photo-upload-3').click()">
                         <p id="photo-preview-text-3">Upload Casual</p>
@@ -1195,7 +1265,8 @@
                 <!-- Slot 4 -->
                 <div class="photo-slot full-length">
                     <label for="photo-upload-4">Upload Full Length</label>
-                    <input type="file" id="photo-upload-4" name="photo-4" accept="image/*">
+                    <input type="file" id="photo-upload-4" name="photo-4" accept=".jpg,.jpeg,.png,.webp,.heic,.heif"
+                        required>
                     <div id="photo-preview-area-4" class="photo-preview-area square-large"
                         onclick="document.getElementById('photo-upload-4').click()">
                         <p id="photo-preview-text-4">Upload Full-Length</p>
@@ -1407,17 +1478,26 @@
                 <label class="lable-input">Describe your ideal partner<span class="text-span-48"> *</span></label>
                 <textarea id="Ideal-Partner-Personality" class="biodata-input input-css"
                     name="Ideal-Partner-Personality"
-                    placeholder="In your own words, describe your ideal partner’s personality, traits, and values you look for"></textarea>
+                    placeholder="In your own words, describe your ideal partner’s personality, traits, and values you look for"
+                    required></textarea>
 
                 <label class="lable-input">What are your deal-breakers?<span class="text-span-48"> *</span></label>
-                <textarea id="Deal-Brakers" class="biodata-input input-css" name="Deal-Brakers"></textarea>
+                <textarea id="Deal-Brakers" class="biodata-input input-css" name="Deal-Brakers" required></textarea>
 
                 <label class="lable-input">Preferred education level<span class="text-span-48"> *</span></label>
-                <input id="Education-Preference" class="biodata-input input-css" type="text"
-                    name="Education-Preference">
+                <input id="Education-Preference" class="biodata-input input-css" type="text" name="Education-Preference"
+                    required>
 
                 <label class="lable-input">Preferred height range<span class="text-span-48"> *</span></label>
-                <input id="Height-Preference" class="biodata-input input-css" type="text" name="Height-Preference">
+                <select id="height-Preference" class="biodata-input input-css" name="height-Preference" required>
+                    <option value="" disabled selected hidden>Select Height</option>
+                    <option>Below 5'0"</option>
+                    <option>5'0" – 5'3"</option>
+                    <option>5'4" – 5'6"</option>
+                    <option>5'7" – 5'9"</option>
+                    <option>5'10" – 6'0"</option>
+                    <option>Above 6'0"</option>
+                </select>
 
                 <label class="lable-input">Caste preference (if any)</label>
                 <input id="Caste-Preference" class="biodata-input input-css" type="text" name="Caste-Preference">
@@ -1433,7 +1513,8 @@
             <div class="form-field">
 
                 <label class="lable-input">Preferred food habits<span class="text-span-48"> *</span></label>
-                <select id="food-preference-partner" class="biodata-input input-css" name="food-preference-partner">
+                <select id="food-preference-partner" class="biodata-input input-css" name="food-preference-partner"
+                    required>
                     <option value="" disabled selected hidden>Select</option>
                     <option>Vegetarian / Vegan</option>
                     <option>Eggetarian / Pescetarian</option>
@@ -1441,7 +1522,8 @@
                 </select>
 
                 <label class="lable-input">Preferred marital status<span class="text-span-48"> *</span></label>
-                <select id="Marital-Status-Preference" class="biodata-input input-css" name="Marital-Status-Preference">
+                <select id="marital-status-preference" class="biodata-input input-css" name="marital-status-preference"
+                    required>
                     <option value="" disabled selected hidden>Select</option>
                     <option>Doesn't Matter</option>
                     <option>Never Married</option>
@@ -1452,14 +1534,14 @@
 
                 <label class="lable-input">Preferred age range<span class="text-span-48"> *</span></label>
                 <input id="Age-Range-Preference" class="biodata-input input-css" type="text" name="Age-Range-Preference"
-                    placeholder="Example: 25-31">
+                    placeholder="Example: 25-31" required>
 
                 <label class="lable-input">Preferred country/city<span class="text-span-48"> *</span></label>
                 <input id="Country-Location-Preference" class="biodata-input input-css" type="text"
-                    name="Country-Location-Preference">
+                    name="Country-Location-Preference" required>
 
                 <label class="lable-input">Open to other locations?<span class="text-span-48"> *</span></label>
-                <select id="open-locations" class="biodata-input input-css" name="open-locations">
+                <select id="open-locations" class="biodata-input input-css" name="open-locations" required>
                     <option value="">Select an option</option>
                     <option>Yes</option>
                     <option>No</option>
@@ -1488,7 +1570,7 @@
 
                 <label class="lable-input">Drinking & Smoking preference<span class="text-span-48"> *</span></label>
                 <input id="Drinking-Smoking-Preference" class="biodata-input input-css" type="text"
-                    name="Drinking-Smoking-Preference">
+                    name="Drinking-Smoking-Preference" required>
 
             </div>
         </div>
@@ -1503,10 +1585,12 @@
                 <label class="lable-input">One thing you hope your future partner understands about you<span
                         class="text-span-48"> *</span></label>
                 <textarea id="One-thing-Partner-Understands" class="biodata-input input-css"
-                    name="One-thing-Partner-Understands"></textarea>
+                    name="One-thing-Partner-Understands" required></textarea>
 
-                <label class="lable-input">Why are you joining UrbanMatch?<span class="text-span-48"> *</span></label>
-                <select id="Reason-to-join-Urbanmatch" class="biodata-input input-css" name="Reason-to-join-Urbanmatch">
+                <label class="lable-input">Why are you joining UrbanMatch?<span class="text-span-48">
+                        *</span></label>
+                <select id="Reason-to-join-Urbanmatch" class="biodata-input input-css" name="Reason-to-join-Urbanmatch"
+                    required>
                     <option value="" disabled selected hidden>Select</option>
                     <option>Tired of apps</option>
                     <option>Family Pressure</option>
@@ -1544,7 +1628,8 @@
                             <br>
                             <div class="info-grid">
                                 <div>Name</div>
-                                <div class="bio-first-filler">: <span class="sync-full-name"></span></div>
+                                <div class="bio-first-filler">: <span class="sync-full-name-first"></span> <span
+                                        class="sync-full-name-last exclude-backend"></span></div>
                                 <div>Date and Time of Birth</div>
                                 <div class="bio-first-filler">: <span class="sync-dob-time"></span></div>
                                 <div>Place of Birth</div>
@@ -1614,7 +1699,8 @@
                                 <div>Occupation</div>
                                 <div class="bio-first-filler">: <span class="sync-current-occupation"></span></div>
                                 <div>Company</div>
-                                <div class="bio-first-filler">: <span class="sync-company-name"></span></div>
+                                <div class="bio-first-filler">: <span class="sync-company-name exclude-backend"></span>
+                                </div>
                                 <div>Job Title</div>
                                 <div>: <span class="sync-job-title"></span></div>
                                 <div>Work Description</div>
@@ -1649,15 +1735,17 @@
                             <br>
                             <div class="info-grid">
                                 <div>Father’s Name</div>
-                                <div>: <span class="sync-father-s-name"></span></div>
+                                <div>: <span class="sync-father-s-name-first"></span> <span
+                                        class="sync-father-s-name-last exclude-backend"></span></div>
                                 <div>Father’s Occupation</div>
                                 <div>: <span class="sync-father-s-occupation"></span></div>
                                 <div>Mother’s Name</div>
-                                <div>: <span class="sync-mother-s-name"></span></div>
+                                <div>: <span class="sync-mother-s-name-first"></span> <span
+                                        class="sync-mother-s-name-last exclude-backend"></span></div>
                                 <div>Mother’s Occupation</div>
                                 <div>: <span class="sync-mother-s-occupation"></span></div>
                                 <div>Siblings</div>
-                                <div>: <span class="sync-sibling-details"></span></div>
+                                <div>: <span class="sync-sibling-details exclude-backend"></span></div>
                                 <div>Family Type</div>
                                 <div>: <span class="sync-family-type"></span></div>
                                 <div>Family Values</div>
@@ -1666,9 +1754,9 @@
                             <br>
                             <br>
                             <br>
-                            <h2 class="section-title">Contact Details</h2>
+                            <h2 class="section-title exclude-backend">Contact Details</h2>
                             <br>
-                            <div class="info-grid">
+                            <div class="info-grid exclude-backend">
                                 <div>Residential Address</div>
                                 <div>: <span class="sync-residential-address"></span></div>
                                 <div>Permanent Address</div>
@@ -1798,7 +1886,7 @@
             <button type="button" id="prev-btn" class="navigation-btn">Previous</button>
             <button type="button" id="next-btn" class="navigation-btn">Next</button>
         </div>
-    </div>
+    </form>
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
@@ -1807,21 +1895,20 @@
              * 1. Field Mapping
              * ------------------------------------------------------------- */
             const fieldMap = {
-                "full-name": "sync-full-name",
+                "full-name-first": "sync-full-name-first",
+                "full-name-last": "sync-full-name-last",
+                "place-of-birth": "sync-place-of-birth",
                 "dob-day": "sync-dob-day",
                 "dob-time": "sync-dob-time",
-                "place-of-birth": "sync-place-of-birth",
                 "gender": "sync-gender",
-                "Marital-Status": "sync-marital-status",
+                "marital-status": "sync-marital-status",
                 "religion": "sync-religion",
                 "caste": "sync-caste",
-                "Height": "sync-height",
+                "height": "sync-height",
                 "Weight": "sync-weight",
                 "complexion": "sync-complexion",
                 "Email-ID": "sync-email-id",
                 "whatsapp-no": "sync-whatsapp-no",
-                "food-preference-personal": "sync-food-preference-personal",
-                "food-preference-partner": "sync-food-preference-partner",
                 "Smoking": "sync-smoking",
                 "Drinking": "sync-drinking",
                 "Hobby-Passion": "sync-hobby-passion",
@@ -1838,11 +1925,11 @@
                 "income-currency": "sync-annual-income",
                 "income-amount": "sync-annual-income",
                 "Country-of-Residence": "sync-country-of-residence",
-                "citizenship": "sync-citizenship",
-                "visa-status": "sync-visa-status",
-                "Father-s-Name": "sync-father-s-name",
+                "Father-s-Name-first": "sync-father-s-name-first",
+                "Father-s-Name-last": "sync-father-s-name-last",
                 "Father-s-Occupation": "sync-father-s-occupation",
-                "Mother-s-Name": "sync-mother-s-name",
+                "Mother-s-Name-first": "sync-mother-s-name-first",
+                "Mother-s-Name-last": "sync-mother-s-name-last",
                 "Mother-s-Occupation": "sync-mother-s-occupation",
                 "sibling-details": "sync-sibling-details",
                 "Family-Type": "sync-family-type",
@@ -1852,9 +1939,10 @@
                 "Ideal-Partner-Personality": "sync-ideal-partner-personality",
                 "Deal-Brakers": "sync-deal-brakers",
                 "Education-Preference": "sync-education-preference",
-                "Height-Preference": "sync-height-preference",
+                "height-Preference": "sync-height-preference",
                 "Caste-Preference": "sync-caste-preference",
-                "Marital-Status-Preference": "sync-marital-status-preference",
+                "marital-status-preference": "sync-marital-status-preference",
+                "food-preference-personal": "sync-food-preference-personal",
                 "food-preference-partner": "sync-food-preference-partner",
                 "Age-Range-Preference": "sync-age-range-preference",
                 "Country-Location-Preference": "sync-country-location-preference",
@@ -1866,6 +1954,8 @@
                 "Meeting-Preference": "sync-meeting-preference",
                 "One-thing-Partner-Understands": "sync-one-thing-partner-understands",
                 "Reason-to-join-Urbanmatch": "sync-reason-to-join-urbanmatch",
+                "citizenship": "sync-citizenship",
+                "visa-status": "sync-visa-status",
             };
 
             /* -------------------------------------------------------------
@@ -2086,31 +2176,103 @@
                 }
             }
 
-            async function sendPDFWebhook(pdfBlob) {
+            async function generateBackendPDF() {
+
+                const pages = document.querySelectorAll(".page");
+                if (!pages.length) throw new Error("No .page elements found");
+
+                const pdf = new jspdf.jsPDF("p", "mm", "a4");
+                let first = true;
+
+                for (let page of pages) {
+
+                    const clone = page.cloneNode(true);
+
+                    // 🔥 HIDE sensitive fields (do NOT remove)
+                    clone.querySelectorAll(".exclude-backend")
+                        .forEach(el => {
+                            el.style.visibility = "hidden";  // keeps spacing
+                        });
+
+                    clone.style.position = "fixed";
+                    clone.style.left = "-9999px";
+                    clone.style.top = "0";
+                    clone.style.width = "794px";
+                    clone.style.background = "white";
+
+                    document.body.appendChild(clone);
+
+                    await waitForImages(clone);
+
+                    const canvas = await html2canvas(clone, {
+                        scale: 2,
+                        useCORS: true,
+                        logging: false
+                    });
+
+                    const imgData = canvas.toDataURL("image/jpeg", 1.0);
+
+                    if (!first) pdf.addPage();
+                    pdf.addImage(imgData, "JPEG", 0, 0, 210, 297);
+                    first = false;
+
+                    clone.remove();
+                }
+
+                return pdf.output("blob");
+            }
+
+
+
+            function appendFormFieldsDirect(formSelector, formData) {
+
+                const form = document.querySelector(formSelector);
+                if (!form) return;
+
+                const formDataObj = new FormData(form);
+
+                formDataObj.forEach((value, key) => {
+                    formData.append(key, value);
+                });
+            }
+
+
+
+
+
+            async function sendPDFWebhook(pdfBlob, backendPdfBlob) {
+
+                const userId = getUserIdFromURL();
+                const pdfFileName = `${userId}_BioData.pdf`;
+                const pdfFileNameFilter = `${userId}.pdf`;
 
                 const formData = new FormData();
 
-                // 1️⃣ Attach PDF
-                formData.append("pdf_file", pdfBlob, `${userId}_Biodata.pdf`);
+                // 1️⃣ Attach PDF (only once)
+                formData.append("pdf_file", pdfBlob, pdfFileName);
+                formData.append("backend_pdf", backendPdfBlob, pdfFileNameFilter);
 
                 // 2️⃣ Attach Images (if uploaded)
-                const photo1 = document.getElementById("photo-upload-1").files[0];
-                const photo2 = document.getElementById("photo-upload-2").files[0];
-                const photo3 = document.getElementById("photo-upload-3").files[0];
-                const photo4 = document.getElementById("photo-upload-4").files[0];
+                const photoInputs = [
+                    "photo-upload-1",
+                    "photo-upload-2",
+                    "photo-upload-3",
+                    "photo-upload-4"
+                ];
 
-                if (photo1) formData.append("photo_1", photo1);
-                if (photo2) formData.append("photo_2", photo2);
-                if (photo3) formData.append("photo_3", photo3);
-                if (photo4) formData.append("photo_4", photo4);
+                photoInputs.forEach((id, index) => {
+                    const file = document.getElementById(id)?.files[0];
+                    if (file) {
+                        formData.append(`photo_${index + 1}`, file);
+                    }
+                });
 
-                // 3️⃣ (Optional) Send name/email also
-                const fullName = document.getElementById("full-name").value;
-                const email = document.getElementById("Email-ID").value;
-
-                formData.append("full_name", fullName);
-                formData.append("email", email);
+                // 3️⃣ Attach userId separately
                 formData.append("userId", userId);
+
+                // 👇 THIS IS THE IMPORTANT PART
+                appendFormFieldsDirect("#biodataForm", formData);
+
 
                 try {
                     const response = await fetch(
@@ -2132,7 +2294,6 @@
                     alert("Submission failed. Please try again.");
                 }
             }
-
 
 
 
@@ -2160,9 +2321,10 @@
 
                 try {
                     const pdfBlob = await generatePDF();
+                    const backendPdfBlob = await generateBackendPDF();
 
                     downloadPDF(pdfBlob);       // ⬅ YES PDF WILL DOWNLOAD
-                    await sendPDFWebhook(pdfBlob); // ⬅ PDF + IMAGES → BACKEND
+                    await sendPDFWebhook(pdfBlob, backendPdfBlob); // ⬅ PDF + IMAGES → BACKEND
 
                     console.log("PDF + images sent successfully");
 
@@ -2177,73 +2339,242 @@
 
 
     <script>
+
         document.addEventListener('DOMContentLoaded', () => {
 
             const steps = document.querySelectorAll('.form-step');
+            const form = document.getElementById("biodataForm");
+
             let currentStep = 0;
 
             const nextBtn = document.getElementById('next-btn');
             const prevBtn = document.getElementById('prev-btn');
             const startBtn = document.getElementById('start-btn');
 
-            // Show a step and manage navigation buttons
-            function showStep(index) {
-                steps.forEach((step, i) => step.classList.toggle('active', i === index));
+            /* ======================================================
+               1. REGEX RULES
+            ====================================================== */
 
-                // First step (start screen) → hide both buttons
+            const validators = {
+                onlyAlphabets: /^[A-Za-z\s.'-]+$/,
+                onlyDigits: /^[0-9]+$/,
+                noAlphabets: /^[^A-Za-z]+$/,
+                noDigits: /^[^0-9]+$/,
+                email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                phone: /^\+[1-9][0-9]{7,14}$/
+            };
+
+            /* ======================================================
+               2. FIELD RULE MAP (Based on YOUR IDs)
+            ====================================================== */
+
+            const fieldRules = {
+                "full-name-first": "onlyAlphabets",
+                "place-of-birth": "onlyAlphabets",
+                "caste": "onlyAlphabets",
+                "Weight": "onlyDigits",
+                "Year-of-Graduation": "noAlphabets",
+                "current-occupation": "noDigits",
+                "Job-Title": "noDigits",
+                "income-amount": "onlyDigits",
+                "Father-s-Name-first": "onlyAlphabets",
+                "Father-s-Occupation": "noDigits",
+                "Mother-s-Name-first": "onlyAlphabets",
+                "Mother-s-Occupation": "noDigits",
+                "Email-ID": "email",
+                "whatsapp-no": "phone",
+                "Caste-Preference": "onlyAlphabets",
+                "Age-Range-Preference": "noAlphabets",
+                "Country-Location-Preference": "noDigits",
+                "Drinking-Smoking-Preference": "noDigits"
+            };
+
+            /* ======================================================
+               3. SINGLE FIELD VALIDATION
+            ====================================================== */
+
+            function validateField(field, showErrorMessage = false) {
+
+                const value = field.value.trim();
+                const rule = fieldRules[field.id];
+
+                // Required check
+                if (field.hasAttribute("required") && !value) {
+                    if (showErrorMessage) showError(field, "This field is required");
+                    return false;
+                }
+
+                // Pattern check
+                if (rule && value && !validators[rule].test(value)) {
+                    if (showErrorMessage) showError(field, "Invalid format");
+                    return false;
+                }
+
+                // ✅ Only clear error when truly valid
+                clearError(field);
+                return true;
+            }
+
+
+
+            /* ======================================================
+               STEP VALIDATION
+            ====================================================== */
+
+            function validateCurrentStep(showErrors = false) {
+
+                const fields = steps[currentStep]
+                    .querySelectorAll("input, select, textarea");
+
+                let isValid = true;
+
+                fields.forEach(field => {
+                    if (field.type !== "button" && field.type !== "file") {
+
+                        const valid = validateField(field, showErrors);
+
+                        if (!valid) isValid = false;
+                    }
+                });
+
+                nextBtn.disabled = !isValid;
+
+                return isValid;
+            }
+
+
+            /* ======================================================
+               5. ERROR UI
+            ====================================================== */
+
+            function showError(field, message) {
+                field.classList.add("error");
+
+                let error = field.parentNode.querySelector(".error-message");
+                if (!error) {
+                    error = document.createElement("span");
+                    error.className = "error-message";
+                    field.parentNode.appendChild(error);
+                }
+
+                error.innerText = message;
+            }
+
+            function clearError(field) {
+                field.classList.remove("error");
+
+                let error = field.parentNode.querySelector(".error-message");
+                if (error) error.innerText = "";
+            }
+
+            /* ======================================================
+               6. LIVE LISTENERS
+            ====================================================== */
+            form.querySelectorAll("input, select, textarea").forEach(field => {
+
+                // 🔹 Show error only when leaving field
+                field.addEventListener("blur", () => {
+                    validateField(field, true);
+                    validateCurrentStep(false);
+                });
+
+                // 🔹 While typing:
+                // Only remove error if field becomes valid
+                field.addEventListener("input", () => {
+
+                    if (field.classList.contains("error")) {
+                        validateField(field, true);
+                    }
+
+                    validateCurrentStep(false);
+                });
+
+            });
+
+
+
+
+            /* ======================================================
+               7. STEP DISPLAY FUNCTION
+            ====================================================== */
+
+            function showStep(index) {
+
+                steps.forEach((step, i) =>
+                    step.classList.toggle('active', i === index)
+                );
+
                 if (index === 0) {
                     prevBtn.style.display = 'none';
                     nextBtn.style.display = 'none';
                 }
-                // Last step (preview) → show only Prev
                 else if (index === steps.length - 1) {
                     prevBtn.style.display = 'inline-block';
                     nextBtn.style.display = 'none';
                 }
-                // All middle steps → show both buttons
                 else {
                     prevBtn.style.display = 'inline-block';
                     nextBtn.style.display = 'inline-block';
-                    nextBtn.textContent = 'Next';
                 }
+
+                validateCurrentStep(false);
             }
 
-            // Start button → go to first input step
+            /* ======================================================
+               8. BUTTON CONTROLS
+            ====================================================== */
+
             startBtn.addEventListener('click', () => {
-                currentStep = 1; // first input step
+                currentStep = 1;
                 showStep(currentStep);
             });
 
-            // Next button
-            nextBtn.addEventListener('click', () => {
-                if (currentStep < steps.length - 1) {
-                    currentStep++;
-                    showStep(currentStep);
-                    console.log("next");
-                }
+            nextBtn.addEventListener("click", () => {
+
+                // Force show all errors if invalid
+                if (!validateCurrentStep(true)) return;
+
+                currentStep++;
+                showStep(currentStep);
             });
 
-            // Prev button
             prevBtn.addEventListener('click', () => {
                 if (currentStep > 0) {
                     currentStep--;
                     showStep(currentStep);
-                    console.log("prev");
                 }
             });
 
-            // Initial render
+            /* ======================================================
+               9. INITIAL LOAD
+            ====================================================== */
+
             showStep(currentStep);
 
         });
+
     </script>
+
+    <style>
+        .navigation-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .error {
+            background: #ff4d4d36 !important;
+            border: 1px solid #ff4d4d !important;
+        }
+
+        .error-message {
+            display: block;
+            font-size: 12px;
+            color: #ff4d4d;
+            margin-top: 4px;
+        }
+    </style>
 
 
 </body>
 
 </html>
-
-
-
-
-
