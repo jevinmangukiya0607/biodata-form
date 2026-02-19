@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UrbanMatch Member BioData</title>
+    <title>Urbanmatch Biodata</title>
 
     <!-- html2pdf library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
@@ -30,6 +30,24 @@
         });
     </script> -->
 
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const desktopDiv = document.getElementById('desktopDiv');
+            const mobileDiv = document.getElementById('mobileDiv');
+
+            function toggleContent() {
+                const isMobile = window.innerWidth <= 768;
+
+                desktopDiv.hidden = isMobile;  // hide on mobile
+                mobileDiv.hidden = !isMobile;   // hide on desktop
+            }
+
+            toggleContent();
+            window.addEventListener('resize', toggleContent);
+        });
+
+    </script>
 
     <style>
         /* ================================
@@ -281,6 +299,19 @@
             position: relative;
             color: white;
             overflow: hidden;
+        }
+
+        .form-step-1 {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            width: 100vw;
+            padding: 0px 40px 60px 40px;
+            position: relative;
+            color: white;
+            overflow: hidden;
+
         }
 
         .step-10 {
@@ -595,1299 +626,1320 @@
 </head>
 
 <body>
-    <form class="form-container new-bg" id="biodataForm">
-        <!-- Step 1: Start -->
-        <div class="form-step step-0" data-step="1">
-            <img src="https://biodata.urbanmatch.co.in/logo.svg" class="logo" alt="">
-            <h2 class="header-title">Define Yourself, <span class="start-title"> Define Your Match </span></h2>
-            <h5 class="heading-46 sub-head">From your journey so far to your partner expectations - everything in
-                one
-                place for the perfect match</h5>
-            <img src="https://biodata.urbanmatch.co.in/heart.svg" class="start-heart" alt="">
-            <button type="button" id="start-btn">Start Your Biodata</button>
-        </div>
-
-        <!-- Step 2: Personal Info -->
-        <div class="form-step step-01" data-step="2">
-            <h2 class="header-title">Basic Personal Info</h2>
-            <h5 class="heading-46 sub-head">Tell us the essentials - who you are and where you come from</h5>
-            <div class="form-field">
-
-                <label class="lable-input">Full Name<span class="text-span-48"> *</span></label>
-                <div class="biodata-input-divider">
-                    <div>
-
-                        <input id="full-name-first" class="biodata-input divider-1 input-css" type="text"
-                            name="full-name-first" placeholder="First Name" required>
-                    </div>
-                    <div class="exclude-backend">
-                        <input id="full-name-last" class="biodata-input divider-2 input-css" type="text"
-                            name="full-name-last" placeholder="Surname" required>
-                    </div>
-                </div>
-
-                <label class="lable-input">Place of Birth<span class="text-span-48"> *</span></label>
-                <input id="place-of-birth" class="biodata-input input-css" type="text" name="place-of-birth" required>
-
-                <label class="lable-input">Date of Birth<span class="text-span-48"> *</span></label>
-                <input id="dob-day" class="biodata-input input-css" type="date" name="dob-time" required>
-
-                <label class="lable-input">Time of Birth<span class="text-span-48"> *</span></label>
-                <input id="dob-time" class="biodata-input input-css" type="time" name="dob-time" required>
-
-                <label class="lable-input">Gender<span class="text-span-48"> *</span></label>
-                <select id="gender" class="biodata-input input-css" name="gender" required>
-                    <option value="" disabled selected hidden>Select Gender</option>
-                    <option>Male</option>
-                    <option>Female</option>
-                </select>
-
-                <label class="lable-input">Marital Status<span class="text-span-48"> *</span></label>
-                <select id="marital-status" class="biodata-input input-css" name="marital-status" required>
-                    <option value="" disabled selected hidden>Select Marital Status</option>
-                    <option>Never Married</option>
-                    <option>Divorced</option>
-                    <option>Widowed</option>
-                    <option>Single Parent</option>
-                </select>
 
 
-                <label class="lable-input">Religion<span class="text-span-48"> *</span></label>
-                <select id="religion" class="biodata-input input-css" name="religion" required>
-                    <option value="" disabled selected hidden>Select Religion</option>
-                    <option>Hindu</option>
-                    <option>Sikh</option>
-                    <option>Christian</option>
-                    <option>Jain</option>
-                    <option>Judaism</option>
-                    <option>Parsi</option>
-                    <option>Buddhist</option>
-                    <option>Jewish</option>
-                    <option>Atheist</option>
-                    <option>Spiritual</option>
-                    <option>Muslim</option>
-                </select>
+    <div id="desktopDiv">
 
-                <label class="lable-input">Caste</label>
-                <input id="caste" class="biodata-input input-css" type="text" name="caste">
 
-                <label class="lable-input">Height<span class="text-span-48"> *</span></label>
-                <select id="height" class="biodata-input input-css" name="height" required>
-                    <option value="" disabled selected hidden>Select Height</option>
-                    <option>4'0"</option>
-                    <option>4'1"</option>
-                    <option>4'2"</option>
-                    <option>4'3"</option>
-                    <option>4'4"</option>
-                    <option>4'5"</option>
-                    <option>4'6"</option>
-                    <option>4'7"</option>
-                    <option>4'8"</option>
-                    <option>4'9"</option>
-                    <option>4'10"</option>
-                    <option>4'11"</option>
-                    <option>5'0"</option>
-                    <option>5'1"</option>
-                    <option>5'2"</option>
-                    <option>5'3"</option>
-                    <option>5'4"</option>
-                    <option>5'5"</option>
-                    <option>5'6"</option>
-                    <option>5'7"</option>
-                    <option>5'8"</option>
-                    <option>5'9"</option>
-                    <option>5'10"</option>
-                    <option>5'11"</option>
-                    <option>6'0"</option>
-                    <option>6'1"</option>
-                    <option>6'2"</option>
-                    <option>6'3"</option>
-                    <option>6'4"</option>
-                    <option>6'5"</option>
-                    <option>6'6"</option>
-                    <option>6'7"</option>
-                    <option>6'8"</option>
-                    <option>6'9"</option>
-                    <option>6'10"</option>
-                    <option>6'11"</option>
-                    <option>7'0"</option>
-                </select>
-
-                <label class="lable-input">Weight<span class="text-span-48"> *</span></label>
-                <input id="Weight" class="biodata-input input-css" type="number" name="Weight" required>
-
-                <label class="lable-input">Complexion<span class="text-span-48"> *</span></label>
-                <select id="complexion" class="biodata-input input-css" name="complexion" required>
-                    <option value="" disabled selected hidden>Select Complexion</option>
-                    <option>Fair</option>
-                    <option>Wheatish</option>
-                    <option>Medium</option>
-                    <option>Dusky</option>
-                    <option>Dark</option>
-                    <option>Other</option>
-                </select>
-
-                <label class="lable-input">When it comes to the menu<span class="text-span-48"> *</span></label>
-                <select id="food-preference-personal" class="biodata-input input-css" name="food-preference-personal"
-                    required>
-                    <option value="" disabled selected hidden>Select Food Preference</option>
-                    <option>Vegetarian / Vegan</option>
-                    <option>Eggetarian / Pescetarian</option>
-                    <option>Non-Vegetarian</option>
-                </select>
-
-                <label class="lable-input">Do you smoke or vape?<span class="text-span-48"> *</span></label>
-                <select id="Smoking" class="biodata-input input-css" name="Smoking" required>
-                    <option value="" disabled selected hidden>Select</option>
-                    <option>Yes</option>
-                    <option>No</option>
-                </select>
-
-                <label class="lable-input">Do you drink?<span class="text-span-48"> *</span></label>
-                <select id="Drinking" class="biodata-input input-css" name="Drinking" required>
-                    <option value="" disabled selected hidden>Select</option>
-                    <option>Yes</option>
-                    <option>No</option>
-                </select>
-
+        <form class="form-container new-bg" id="biodataForm">
+            <!-- Step 1: Start -->
+            <div class="form-step step-0" data-step="1">
+                <img src="https://biodata.urbanmatch.co.in/logo.svg" class="logo" alt="">
+                <h2 class="header-title">Define Yourself, <span class="start-title"> Define Your Match </span></h2>
+                <h5 class="heading-46 sub-head">From your journey so far to your partner expectations - everything in
+                    one
+                    place for the perfect match</h5>
+                <img src="https://biodata.urbanmatch.co.in/heart.svg" class="start-heart" alt="">
+                <button type="button" id="start-btn">Start Your Biodata</button>
             </div>
-        </div>
 
+            <!-- Step 2: Personal Info -->
+            <div class="form-step step-01" data-step="2">
+                <h2 class="header-title">Basic Personal Info</h2>
+                <h5 class="heading-46 sub-head">Tell us the essentials - who you are and where you come from</h5>
+                <div class="form-field">
 
-        <!-- Step 3: Personality & Lifestyle -->
-        <div class="form-step step-02" data-step="3">
-            <h2 class="header-title">Personality & Lifestyle</h2>
-            <h5 class="heading-46 sub-head">Help us understand the real you</h5>
-            <div class="form-field">
+                    <label class="lable-input">Full Name<span class="text-span-48"> *</span></label>
+                    <div class="biodata-input-divider">
+                        <div>
 
-                <label class="lable-input">What are your hobbies/passions?<span class="text-span-48">
-                        *</span></label>
-                <textarea id="Hobby-Passion" class="biodata-input input-css" name="Hobby-Passion" required></textarea>
-
-                <label class="lable-input">Words your friends would use to describe you</label>
-                <input id="3-words" class="biodata-input input-css" type="text" name="3-words">
-
-                <label class="lable-input">Languages you speak fluently<span class="text-span-48"> *</span></label>
-                <input id="languages-spoken-fluently" class="biodata-input input-css" type="text"
-                    name="languages-spoken-fluently" required>
-
-                <label class="lable-input">Anything special or unique about your personality?<span class="text-span-48">
-                        *</span></label>
-                <textarea id="unique-traits" class="biodata-input input-css" name="unique-traits" required></textarea>
-
-            </div>
-        </div>
-
-
-        <!-- Step 4: Education & Career -->
-        <div class="form-step step-03" data-step="4">
-            <h2 class="header-title">Education & Career</h2>
-            <h5 class="heading-46 sub-head">Your journey and ambitions so far</h5>
-            <div class="form-field">
-
-                <label class="lable-input">Course(s) Completed<span class="text-span-48"> *</span></label>
-                <input id="Course-Completed" class="biodata-input input-css" type="text" name="Course-Completed"
-                    placeholder="List your main courses or degrees (e.g., Bachelor’s, Master’s, Diploma)" required>
-
-                <label class="lable-input">Institution(s) / University(ies)<span class="text-span-48">
-                        *</span></label>
-                <input id="Institution" class="biodata-input input-css" type="text" name="Institution"
-                    placeholder="Enter the name of your institution or university" required>
-
-                <label class="lable-input">Year(s) of Completion<span class="text-span-48"> *</span></label>
-                <input id="Year-of-Graduation" class="biodata-input input-css" type="text" name="Year-of-Graduation"
-                    placeholder="Enter the year(s) (e.g., 2023, 2017)" required>
-
-                <label class="lable-input">Current Occupation<span class="text-span-48"> *</span></label>
-                <input id="current-occupation" class="biodata-input input-css" type="text" name="current-occupation"
-                    required>
-
-                <label class="lable-input">Name of Company/Organization</label>
-                <input id="company-name" class="biodata-input input-css" type="text" name="company-name">
-
-                <label class="lable-input">Job Title</label>
-                <input id="Job-Title" class="biodata-input input-css" type="text" name="Job-Title">
-
-                <label class="lable-input">Brief description of your work</label>
-                <textarea id="Work-Description" class="biodata-input input-css" name="Work-Description"></textarea>
-
-                <label class="lable-input">What's your annual income? <span class="text-span-48"> *</span></label>
-                <div class="annual-income">
-                    <select class="biodata-input input-css" name="income-currency" id="income-currency" required>
-                        <option value="" disabled selected hidden>Select Currency</option>
-
-                        <option value="USD">USD ($) - US Dollar</option>
-                        <option value="CAD">CAD (C$) - Canadian Dollar</option>
-                        <option value="AUD">AUD (A$) - Australian Dollar</option>
-                        <option value="GBP">GBP (£) - British Pound</option>
-                        <option value="SGD">SGD (S$) - Singapore Dollar</option>
-                        <option value="INR">INR (₹) - Indian Rupee</option>
-                        <option value="AED">AED (د.إ) - UAE Dirham</option>
-                    </select>
-                    <input class="biodata-input input-css" type="text" name="income-amount" id="income-amount"
-                        placeholder="Amount">
-
-                </div>
-
-
-                <label class="lable-input">Country of Residence<span class="text-span-48"> *</span></label>
-                <select class="biodata-input input-css" name="Country-of-Residence" id="Country-of-Residence" required>
-                    <option value="" disabled selected hidden>Select Currency</option>
-                    <option value="AF">Afghanistan</option>
-                    <option value="AX">Åland Islands</option>
-                    <option value="AL">Albania</option>
-                    <option value="DZ">Algeria</option>
-                    <option value="AS">American Samoa</option>
-                    <option value="AD">Andorra</option>
-                    <option value="AO">Angola</option>
-                    <option value="AI">Anguilla</option>
-                    <option value="AQ">Antarctica</option>
-                    <option value="AG">Antigua and Barbuda</option>
-                    <option value="AR">Argentina</option>
-                    <option value="AM">Armenia</option>
-                    <option value="AW">Aruba</option>
-                    <option value="AU">Australia</option>
-                    <option value="AT">Austria</option>
-                    <option value="AZ">Azerbaijan</option>
-                    <option value="BS">Bahamas</option>
-                    <option value="BH">Bahrain</option>
-                    <option value="BD">Bangladesh</option>
-                    <option value="BB">Barbados</option>
-                    <option value="BY">Belarus</option>
-                    <option value="BE">Belgium</option>
-                    <option value="BZ">Belize</option>
-                    <option value="BJ">Benin</option>
-                    <option value="BM">Bermuda</option>
-                    <option value="BT">Bhutan</option>
-                    <option value="BO">Bolivia (Plurinational State of)</option>
-                    <option value="BA">Bosnia and Herzegovina</option>
-                    <option value="BW">Botswana</option>
-                    <option value="BV">Bouvet Island</option>
-                    <option value="BR">Brazil</option>
-                    <option value="IO">British Indian Ocean Territory</option>
-                    <option value="BN">Brunei Darussalam</option>
-                    <option value="BG">Bulgaria</option>
-                    <option value="BF">Burkina Faso</option>
-                    <option value="BI">Burundi</option>
-                    <option value="CV">Cabo Verde</option>
-                    <option value="KH">Cambodia</option>
-                    <option value="CM">Cameroon</option>
-                    <option value="CA">Canada</option>
-                    <option value="BQ">Caribbean Netherlands</option>
-                    <option value="KY">Cayman Islands</option>
-                    <option value="CF">Central African Republic</option>
-                    <option value="TD">Chad</option>
-                    <option value="CL">Chile</option>
-                    <option value="CN">China</option>
-                    <option value="CX">Christmas Island</option>
-                    <option value="CC">Cocos (Keeling) Islands</option>
-                    <option value="CO">Colombia</option>
-                    <option value="KM">Comoros</option>
-                    <option value="CG">Congo</option>
-                    <option value="CD">Congo, Democratic Republic of the</option>
-                    <option value="CK">Cook Islands</option>
-                    <option value="CR">Costa Rica</option>
-                    <option value="HR">Croatia</option>
-                    <option value="CU">Cuba</option>
-                    <option value="CW">Curaçao</option>
-                    <option value="CY">Cyprus</option>
-                    <option value="CZ">Czech Republic</option>
-                    <option value="CI">Côte d'Ivoire</option>
-                    <option value="DK">Denmark</option>
-                    <option value="DJ">Djibouti</option>
-                    <option value="DM">Dominica</option>
-                    <option value="DO">Dominican Republic</option>
-                    <option value="EC">Ecuador</option>
-                    <option value="EG">Egypt</option>
-                    <option value="SV">El Salvador</option>
-                    <option value="GQ">Equatorial Guinea</option>
-                    <option value="ER">Eritrea</option>
-                    <option value="EE">Estonia</option>
-                    <option value="SZ">Eswatini (Swaziland)</option>
-                    <option value="ET">Ethiopia</option>
-                    <option value="FK">Falkland Islands (Malvinas)</option>
-                    <option value="FO">Faroe Islands</option>
-                    <option value="FJ">Fiji</option>
-                    <option value="FI">Finland</option>
-                    <option value="FR">France</option>
-                    <option value="GF">French Guiana</option>
-                    <option value="PF">French Polynesia</option>
-                    <option value="TF">French Southern Territories</option>
-                    <option value="GA">Gabon</option>
-                    <option value="GM">Gambia</option>
-                    <option value="GE">Georgia</option>
-                    <option value="DE">Germany</option>
-                    <option value="GH">Ghana</option>
-                    <option value="GI">Gibraltar</option>
-                    <option value="GR">Greece</option>
-                    <option value="GL">Greenland</option>
-                    <option value="GD">Grenada</option>
-                    <option value="GP">Guadeloupe</option>
-                    <option value="GU">Guam</option>
-                    <option value="GT">Guatemala</option>
-                    <option value="GG">Guernsey</option>
-                    <option value="GN">Guinea</option>
-                    <option value="GW">Guinea-Bissau</option>
-                    <option value="GY">Guyana</option>
-                    <option value="HT">Haiti</option>
-                    <option value="HM">Heard Island and Mcdonald Islands</option>
-                    <option value="HN">Honduras</option>
-                    <option value="HK">Hong Kong</option>
-                    <option value="HU">Hungary</option>
-                    <option value="IS">Iceland</option>
-                    <option value="IN">India</option>
-                    <option value="ID">Indonesia</option>
-                    <option value="IR">Iran</option>
-                    <option value="IQ">Iraq</option>
-                    <option value="IE">Ireland</option>
-                    <option value="IM">Isle of Man</option>
-                    <option value="IL">Israel</option>
-                    <option value="IT">Italy</option>
-                    <option value="JM">Jamaica</option>
-                    <option value="JP">Japan</option>
-                    <option value="JE">Jersey</option>
-                    <option value="JO">Jordan</option>
-                    <option value="KZ">Kazakhstan</option>
-                    <option value="KE">Kenya</option>
-                    <option value="KI">Kiribati</option>
-                    <option value="KP">Korea, North</option>
-                    <option value="KR">Korea, South</option>
-                    <option value="XK">Kosovo</option>
-                    <option value="KW">Kuwait</option>
-                    <option value="KG">Kyrgyzstan</option>
-                    <option value="LA">Lao People's Democratic Republic</option>
-                    <option value="LV">Latvia</option>
-                    <option value="LB">Lebanon</option>
-                    <option value="LS">Lesotho</option>
-                    <option value="LR">Liberia</option>
-                    <option value="LY">Libya</option>
-                    <option value="LI">Liechtenstein</option>
-                    <option value="LT">Lithuania</option>
-                    <option value="LU">Luxembourg</option>
-                    <option value="MO">Macao</option>
-                    <option value="MK">Macedonia North</option>
-                    <option value="MG">Madagascar</option>
-                    <option value="MW">Malawi</option>
-                    <option value="MY">Malaysia</option>
-                    <option value="MV">Maldives</option>
-                    <option value="ML">Mali</option>
-                    <option value="MT">Malta</option>
-                    <option value="MH">Marshall Islands</option>
-                    <option value="MQ">Martinique</option>
-                    <option value="MR">Mauritania</option>
-                    <option value="MU">Mauritius</option>
-                    <option value="YT">Mayotte</option>
-                    <option value="MX">Mexico</option>
-                    <option value="FM">Micronesia</option>
-                    <option value="MD">Moldova</option>
-                    <option value="MC">Monaco</option>
-                    <option value="MN">Mongolia</option>
-                    <option value="ME">Montenegro</option>
-                    <option value="MS">Montserrat</option>
-                    <option value="MA">Morocco</option>
-                    <option value="MZ">Mozambique</option>
-                    <option value="MM">Myanmar (Burma)</option>
-                    <option value="NA">Namibia</option>
-                    <option value="NR">Nauru</option>
-                    <option value="NP">Nepal</option>
-                    <option value="NL">Netherlands</option>
-                    <option value="AN">Netherlands Antilles</option>
-                    <option value="NC">New Caledonia</option>
-                    <option value="NZ">New Zealand</option>
-                    <option value="NI">Nicaragua</option>
-                    <option value="NE">Niger</option>
-                    <option value="NG">Nigeria</option>
-                    <option value="NU">Niue</option>
-                    <option value="NF">Norfolk Island</option>
-                    <option value="MP">Northern Mariana Islands</option>
-                    <option value="NO">Norway</option>
-                    <option value="OM">Oman</option>
-                    <option value="PK">Pakistan</option>
-                    <option value="PW">Palau</option>
-                    <option value="PS">Palestine</option>
-                    <option value="PA">Panama</option>
-                    <option value="PG">Papua New Guinea</option>
-                    <option value="PY">Paraguay</option>
-                    <option value="PE">Peru</option>
-                    <option value="PH">Philippines</option>
-                    <option value="PN">Pitcairn Islands</option>
-                    <option value="PL">Poland</option>
-                    <option value="PT">Portugal</option>
-                    <option value="PR">Puerto Rico</option>
-                    <option value="QA">Qatar</option>
-                    <option value="RE">Reunion</option>
-                    <option value="RO">Romania</option>
-                    <option value="RU">Russian Federation</option>
-                    <option value="RW">Rwanda</option>
-                    <option value="BL">Saint Barthelemy</option>
-                    <option value="SH">Saint Helena</option>
-                    <option value="KN">Saint Kitts and Nevis</option>
-                    <option value="LC">Saint Lucia</option>
-                    <option value="MF">Saint Martin</option>
-                    <option value="PM">Saint Pierre and Miquelon</option>
-                    <option value="VC">Saint Vincent and the Grenadines</option>
-                    <option value="WS">Samoa</option>
-                    <option value="SM">San Marino</option>
-                    <option value="ST">Sao Tome and Principe</option>
-                    <option value="SA">Saudi Arabia</option>
-                    <option value="SN">Senegal</option>
-                    <option value="RS">Serbia</option>
-                    <option value="CS">Serbia and Montenegro</option>
-                    <option value="SC">Seychelles</option>
-                    <option value="SL">Sierra Leone</option>
-                    <option value="SG">Singapore</option>
-                    <option value="SX">Sint Maarten</option>
-                    <option value="SK">Slovakia</option>
-                    <option value="SI">Slovenia</option>
-                    <option value="SB">Solomon Islands</option>
-                    <option value="SO">Somalia</option>
-                    <option value="ZA">South Africa</option>
-                    <option value="GS">South Georgia and the South Sandwich Islands</option>
-                    <option value="SS">South Sudan</option>
-                    <option value="ES">Spain</option>
-                    <option value="LK">Sri Lanka</option>
-                    <option value="SD">Sudan</option>
-                    <option value="SR">Suriname</option>
-                    <option value="SJ">Svalbard and Jan Mayen</option>
-                    <option value="SE">Sweden</option>
-                    <option value="CH">Switzerland</option>
-                    <option value="SY">Syria</option>
-                    <option value="TW">Taiwan</option>
-                    <option value="TJ">Tajikistan</option>
-                    <option value="TZ">Tanzania</option>
-                    <option value="TH">Thailand</option>
-                    <option value="TL">Timor-Leste</option>
-                    <option value="TG">Togo</option>
-                    <option value="TK">Tokelau</option>
-                    <option value="TO">Tonga</option>
-                    <option value="TT">Trinidad and Tobago</option>
-                    <option value="TN">Tunisia</option>
-                    <option value="TR">Turkey (Türkiye)</option>
-                    <option value="TM">Turkmenistan</option>
-                    <option value="TC">Turks and Caicos Islands</option>
-                    <option value="TV">Tuvalu</option>
-                    <option value="UM">U.S. Outlying Islands</option>
-                    <option value="UG">Uganda</option>
-                    <option value="UA">Ukraine</option>
-                    <option value="AE">United Arab Emirates</option>
-                    <option value="GB">United Kingdom</option>
-                    <option value="US">United States</option>
-                    <option value="UY">Uruguay</option>
-                    <option value="UZ">Uzbekistan</option>
-                    <option value="VU">Vanuatu</option>
-                    <option value="VA">Vatican City Holy See</option>
-                    <option value="VE">Venezuela</option>
-                    <option value="VN">Vietnam</option>
-                    <option value="VG">Virgin Islands, British</option>
-                    <option value="VI">Virgin Islands, U.S</option>
-                    <option value="WF">Wallis and Futuna</option>
-                    <option value="EH">Western Sahara</option>
-                    <option value="YE">Yemen</option>
-                    <option value="ZM">Zambia</option>
-                    <option value="ZW">Zimbabwe</option>
-                </select>
-
-                <label class="lable-input">Citizenship</label>
-                <div>
-                    <!-- Step 1: Citizenship -->
-                    <select id="citizenship" name="citizenship" class="input-css biodata-input">
-                        <option value="">Select your citizenship</option>
-                        <option value="Indian Citizen - Resident in India">Indian Citizen – Resident in India
-                        </option>
-                        <option value="Indian Citizen - Living Abroad">Indian Citizen – Living Abroad</option>
-                        <option value="OCI / PIO">OCI / PIO</option>
-                        <option value="Permanent Resident">Permanent Resident</option>
-                        <option value="Foreign Citizen">Foreign Citizen</option>
-                    </select>
-
-                    <!-- Dynamic Helper Text (hidden initially) -->
-                    <p id="visa-helper" style="display:none; font-size:14px; color:#fafafa; margin-top:8px;">
-                        Since you indicated you are living abroad or hold a foreign/PR status,
-                        please select your exact visa or residency type below.
-                        (Examples: F1/H1B/L1/OPT for USA, Skilled Worker/Tier 2/Graduate Visa for UK,
-                        UAE Work or Residency Visa, Canadian PR, Australian Student/Work Visa, etc.)
-                    </p>
-
-                    <!-- Step 2: Visa (hidden until triggered) -->
-                    <select id="visa-status" name="visa-status" style="display:none; margin-top:10px;"
-                        class="input-css biodata-input">
-                        <option value="">Select your visa type</option>
-                        <option value="F1 Student Visa">F1 Student Visa</option>
-                        <option value="H1B Work Visa">H1B Work Visa</option>
-                        <option value="L1 Work Visa">L1 Work Visa</option>
-                        <option value="OPT / CPT">OPT / CPT</option>
-                        <option value="Skilled Worker (UK)">Skilled Worker (UK)</option>
-                        <option value="Graduate / Tier 2 (UK)">Graduate / Tier 2 (UK)</option>
-                        <option value="UAE Work Visa">UAE Work Visa</option>
-                        <option value="UAE Residency Visa">UAE Residency Visa</option>
-                        <option value="Canada PR">Canada PR</option>
-                        <option value="Australia Work / Student Visa">Australia Work / Student Visa</option>
-                        <option value="Other">Other</option>
-                    </select>
-                </div>
-
-                <script>
-                    const citizenship = document.getElementById('citizenship');
-                    const visa = document.getElementById('visa-status');
-                    const helper = document.getElementById('visa-helper');
-
-                    citizenship.addEventListener('change', function () {
-                        if (this.value.includes('Living Abroad') ||
-                            this.value.includes('Permanent Resident') ||
-                            this.value.includes('Foreign Citizen')) {
-                            visa.style.display = 'block';   // show visa options
-                            helper.style.display = 'block'; // show helper text
-                        } else {
-                            visa.style.display = 'none';    // hide visa
-                            helper.style.display = 'none';  // hide helper
-                            visa.value = '';                // reset value
-                        }
-                    });
-                </script>
-
-            </div>
-        </div>
-
-        <!-- Step 5: Family Background -->
-        <div class="form-step step-04" data-step="5">
-            <h2 class="header-title">Family Background</h2>
-            <h5 class="heading-46 sub-head">Your roots and support system</h5>
-            <div class="form-field">
-
-                <label class="lable-input">Father's Name<span class="text-span-48"> *</span></label>
-                <div class="biodata-input-divider">
-                    <input id="Father-s-Name-first" class="biodata-input divider-1  input-css" type="text"
-                        name="Father-s-Name-first" placeholder="First Name" required>
-                    <input id="Father-s-Name-last" class="biodata-input divider-2  input-css" type="text"
-                        name="Father-s-Name-last" placeholder="Surname" required>
-                </div>
-
-                <label class="lable-input">Father's Occupation<span class="text-span-48"> *</span></label>
-                <input id="Father-s-Occupation" class="biodata-input input-css" type="text" name="Father-s-Occupation"
-                    required>
-
-                <label class="lable-input">Mother's Name<span class="text-span-48"> *</span></label>
-                <div class="biodata-input-divider">
-                    <input id="Mother-s-Name-first" class="biodata-input divider-1  input-css" type="text"
-                        name="Mother-s-Name-first" placeholder="First Name" required>
-                    <input id="Mother-s-Name-last" class="biodata-input divider-2  input-css" type="text"
-                        name="Mother-s-Name-last" placeholder="Surname" required>
-                </div>
-
-                <label class="lable-input">Mother's Occupation<span class="text-span-48"> *</span></label>
-                <input id="Mother-s-Occupation" class="biodata-input input-css" type="text" name="Mother-s-Occupation"
-                    required>
-
-                <label class="lable-input">Sibling(s) – Name(s), Age, Occupation</label>
-                <textarea id="sibling-details" class="biodata-input input-css" name="sibling-details"></textarea>
-
-                <label class="lable-input">Family Type<span class="text-span-48"> *</span></label>
-                <select id="Family-Type" class="biodata-input input-css" name="Family-Type" required>
-                    <option value="">Select</option>
-                    <option>Nuclear</option>
-                    <option>Joint</option>
-                    <option>Extended</option>
-                </select>
-
-                <label class="lable-input">Family values or expectations</label>
-                <textarea id="Family-Values-Expectations" class="biodata-input input-css"
-                    name="Family-Values-Expectations"></textarea>
-
-            </div>
-        </div>
-
-
-        <!-- Step 6: Location & Contact -->
-        <div class="form-step step-05" data-step="6">
-            <h2 class="header-title">Location & Contact Info</h2>
-            <h5 class="heading-46 sub-head">We’ll never spam. Just matchmaking</h5>
-            <div class="form-field">
-
-                <label class="lable-input">Your Residential Address<span class="text-span-48"> *</span></label>
-                <textarea id="Residential-Address" class="biodata-input input-css" name="Residential-Address"
-                    required></textarea>
-
-                <label class="lable-input">Your Permanent Address<span class="text-span-48"> *</span></label>
-                <textarea id="Permanent-Address" class="biodata-input input-css" name="Permanent-Address"
-                    required></textarea>
-
-                <label class="lable-input">Your Email ID<span class="text-span-48"> *</span></label>
-                <input id="Email-ID" class="biodata-input input-css" type="email" name="Email-ID" required>
-
-                <label class="lable-input">Your Whatsapp No (add country code)<span class="text-span-48">
-                        *</span></label>
-                <input id="whatsapp-no" class="biodata-input input-css" type="text" name="whatsapp-no"
-                    placeholder="+91, +1 etc" required>
-
-            </div>
-        </div>
-
-
-        <!-- Step 7: Photo Upload -->
-        <div class="form-step step-06" data-step="7">
-            <h2 class="header-title">Upload Photos</h2>
-            <h5 class="heading-46 sub-head">First impressions matter</h5>
-            <h5 class="sub-head-1">Please Upload 4 clear photos of yourself (JPEG/PNG) *</h5>
-            <div class="photo-grid">
-                <!-- Slot 1 -->
-                <div class="photo-slot">
-                    <label for="photo-upload-1">Upload Headshots</label>
-                    <input type="file" id="photo-upload-1" name="photo-1" accept="image/*" required>
-                    <div id="photo-preview-area-1" class="photo-preview-area circle"
-                        onclick="document.getElementById('photo-upload-1').click()">
-                        <p id="photo-preview-text-1">Upload Headshot</p>
-                        <img id="photo-preview-img-1" src="#" alt="Headshot Preview">
+                            <input id="full-name-first" class="biodata-input divider-1 input-css" type="text"
+                                name="full-name-first" placeholder="First Name" required>
+                        </div>
+                        <div class="exclude-backend">
+                            <input id="full-name-last" class="biodata-input divider-2 input-css" type="text"
+                                name="full-name-last" placeholder="Surname" required>
+                        </div>
                     </div>
-                </div>
 
-                <!-- Slot 2 -->
-                <div class="photo-slot">
-                    <label for="photo-upload-2">Upload Portrait</label>
-                    <input type="file" id="photo-upload-2" name="photo-2" accept="image/*" required>
-                    <div id="photo-preview-area-2" class="photo-preview-area circle"
-                        onclick="document.getElementById('photo-upload-2').click()">
-                        <p id="photo-preview-text-2">Upload Portrait</p>
-                        <img id="photo-preview-img-2" src="#" alt="Portrait Preview">
-                    </div>
-                </div>
-
-                <!-- Slot 3 -->
-                <div class="photo-slot">
-                    <label for="photo-upload-3">Upload Casual Photo</label>
-                    <input type="file" id="photo-upload-3" name="photo-3" accept="image/*" required>
-                    <div id="photo-preview-area-3" class="photo-preview-area circle"
-                        onclick="document.getElementById('photo-upload-3').click()">
-                        <p id="photo-preview-text-3">Upload Casual</p>
-                        <img id="photo-preview-img-3" src="#" alt="Casual Preview">
-                    </div>
-                </div>
-
-                <!-- Slot 4 -->
-                <div class="photo-slot full-length">
-                    <label for="photo-upload-4">Upload Full Length</label>
-                    <input type="file" id="photo-upload-4" name="photo-4" accept=".jpg,.jpeg,.png,.webp,.heic,.heif"
+                    <label class="lable-input">Place of Birth<span class="text-span-48"> *</span></label>
+                    <input id="place-of-birth" class="biodata-input input-css" type="text" name="place-of-birth"
                         required>
-                    <div id="photo-preview-area-4" class="photo-preview-area square-large"
-                        onclick="document.getElementById('photo-upload-4').click()">
-                        <p id="photo-preview-text-4">Upload Full-Length</p>
-                        <img id="photo-preview-img-4" src="#" alt="Full-Length Preview">
-                    </div>
+
+                    <label class="lable-input">Date of Birth<span class="text-span-48"> *</span></label>
+                    <input id="dob-day" class="biodata-input input-css" type="date" name="dob-time" required>
+
+                    <label class="lable-input">Time of Birth<span class="text-span-48"> *</span></label>
+                    <input id="dob-time" class="biodata-input input-css" type="time" name="dob-time" required>
+
+                    <label class="lable-input">Gender<span class="text-span-48"> *</span></label>
+                    <select id="gender" class="biodata-input input-css" name="gender" required>
+                        <option value="" disabled selected hidden>Select Gender</option>
+                        <option>Male</option>
+                        <option>Female</option>
+                    </select>
+
+                    <label class="lable-input">Marital Status<span class="text-span-48"> *</span></label>
+                    <select id="marital-status" class="biodata-input input-css" name="marital-status" required>
+                        <option value="" disabled selected hidden>Select Marital Status</option>
+                        <option>Never Married</option>
+                        <option>Divorced</option>
+                        <option>Widowed</option>
+                        <option>Single Parent</option>
+                    </select>
+
+
+                    <label class="lable-input">Religion<span class="text-span-48"> *</span></label>
+                    <select id="religion" class="biodata-input input-css" name="religion" required>
+                        <option value="" disabled selected hidden>Select Religion</option>
+                        <option>Hindu</option>
+                        <option>Sikh</option>
+                        <option>Christian</option>
+                        <option>Jain</option>
+                        <option>Judaism</option>
+                        <option>Parsi</option>
+                        <option>Buddhist</option>
+                        <option>Jewish</option>
+                        <option>Atheist</option>
+                        <option>Spiritual</option>
+                        <option>Muslim</option>
+                    </select>
+
+                    <label class="lable-input">Caste</label>
+                    <input id="caste" class="biodata-input input-css" type="text" name="caste">
+
+                    <label class="lable-input">Height<span class="text-span-48"> *</span></label>
+                    <select id="height" class="biodata-input input-css" name="height" required>
+                        <option value="" disabled selected hidden>Select Height</option>
+                        <option>4'0"</option>
+                        <option>4'1"</option>
+                        <option>4'2"</option>
+                        <option>4'3"</option>
+                        <option>4'4"</option>
+                        <option>4'5"</option>
+                        <option>4'6"</option>
+                        <option>4'7"</option>
+                        <option>4'8"</option>
+                        <option>4'9"</option>
+                        <option>4'10"</option>
+                        <option>4'11"</option>
+                        <option>5'0"</option>
+                        <option>5'1"</option>
+                        <option>5'2"</option>
+                        <option>5'3"</option>
+                        <option>5'4"</option>
+                        <option>5'5"</option>
+                        <option>5'6"</option>
+                        <option>5'7"</option>
+                        <option>5'8"</option>
+                        <option>5'9"</option>
+                        <option>5'10"</option>
+                        <option>5'11"</option>
+                        <option>6'0"</option>
+                        <option>6'1"</option>
+                        <option>6'2"</option>
+                        <option>6'3"</option>
+                        <option>6'4"</option>
+                        <option>6'5"</option>
+                        <option>6'6"</option>
+                        <option>6'7"</option>
+                        <option>6'8"</option>
+                        <option>6'9"</option>
+                        <option>6'10"</option>
+                        <option>6'11"</option>
+                        <option>7'0"</option>
+                    </select>
+
+                    <label class="lable-input">Weight<span class="text-span-48"> *</span></label>
+                    <input id="Weight" class="biodata-input input-css" type="number" name="Weight" required>
+
+                    <label class="lable-input">Complexion<span class="text-span-48"> *</span></label>
+                    <select id="complexion" class="biodata-input input-css" name="complexion" required>
+                        <option value="" disabled selected hidden>Select Complexion</option>
+                        <option>Fair</option>
+                        <option>Wheatish</option>
+                        <option>Medium</option>
+                        <option>Dusky</option>
+                        <option>Dark</option>
+                        <option>Other</option>
+                    </select>
+
+                    <label class="lable-input">When it comes to the menu<span class="text-span-48"> *</span></label>
+                    <select id="food-preference-personal" class="biodata-input input-css"
+                        name="food-preference-personal" required>
+                        <option value="" disabled selected hidden>Select Food Preference</option>
+                        <option>Vegetarian / Vegan</option>
+                        <option>Eggetarian / Pescetarian</option>
+                        <option>Non-Vegetarian</option>
+                    </select>
+
+                    <label class="lable-input">Do you smoke or vape?<span class="text-span-48"> *</span></label>
+                    <select id="Smoking" class="biodata-input input-css" name="Smoking" required>
+                        <option value="" disabled selected hidden>Select</option>
+                        <option>Yes</option>
+                        <option>No</option>
+                    </select>
+
+                    <label class="lable-input">Do you drink?<span class="text-span-48"> *</span></label>
+                    <select id="Drinking" class="biodata-input input-css" name="Drinking" required>
+                        <option value="" disabled selected hidden>Select</option>
+                        <option>Yes</option>
+                        <option>No</option>
+                    </select>
+
                 </div>
             </div>
 
-            <p id="photo-error">Please upload all 4 photos to continue.</p>
-            <style>
-                /* Grid layout — 3 top circles + 1 large below */
-                .photo-grid {
-                    display: grid;
-                    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-                    gap: 40px;
-                    justify-items: center;
-                    align-items: start;
-                    max-width: 1000px;
-                    margin: 0 auto;
-                }
 
-                .photo-slot {
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    text-align: center;
-                    width: 100%;
-                }
+            <!-- Step 3: Personality & Lifestyle -->
+            <div class="form-step step-02" data-step="3">
+                <h2 class="header-title">Personality & Lifestyle</h2>
+                <h5 class="heading-46 sub-head">Help us understand the real you</h5>
+                <div class="form-field">
 
-                /* Label above each slot */
-                .photo-slot label {
-                    font-size: 15px;
-                    color: rgba(255, 255, 255, 0.8);
-                    margin-bottom: 10px;
-                }
+                    <label class="lable-input">What are your hobbies/passions?<span class="text-span-48">
+                            *</span></label>
+                    <textarea id="Hobby-Passion" class="biodata-input input-css" name="Hobby-Passion"
+                        required></textarea>
 
-                /* Hide the file input, style preview area instead */
-                .photo-slot input[type="file"] {
-                    display: none;
-                }
+                    <label class="lable-input">Words your friends would use to describe you</label>
+                    <input id="3-words" class="biodata-input input-css" type="text" name="3-words">
 
-                /* Shared style for circular and square boxes */
-                .photo-preview-area {
-                    width: 200px;
-                    height: 200px;
-                    border: 2px dashed rgba(255, 255, 255, 0.25);
-                    background: rgba(255, 255, 255, 0.06);
-                    backdrop-filter: blur(10px) saturate(150%);
-                    -webkit-backdrop-filter: blur(10px) saturate(150%);
-                    border-radius: 16px;
-                    position: relative;
-                    overflow: hidden;
-                    transition: all 0.3s ease;
-                    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.08),
-                        0 8px 20px rgba(0, 0, 0, 0.45);
-                    cursor: pointer;
-                }
+                    <label class="lable-input">Languages you speak fluently<span class="text-span-48"> *</span></label>
+                    <input id="languages-spoken-fluently" class="biodata-input input-css" type="text"
+                        name="languages-spoken-fluently" required>
 
-                /* Circle variant */
-                .photo-preview-area.circle {
-                    border-radius: 50%;
-                    width: 180px;
-                    height: 180px;
-                }
+                    <label class="lable-input">Anything special or unique about your personality?<span
+                            class="text-span-48">
+                            *</span></label>
+                    <textarea id="unique-traits" class="biodata-input input-css" name="unique-traits"
+                        required></textarea>
 
-                /* Larger square for full-length photo */
-                .photo-slot.full-length {
-                    grid-column: span 3;
-                    width: 100%;
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                }
+                </div>
+            </div>
 
-                .photo-preview-area.square-large {
-                    width: 420px;
-                    height: 420px;
-                    border-radius: 20px;
-                }
 
-                /* Hover glow */
-                .photo-preview-area:hover {
-                    border-color: rgba(49, 61, 134, 0.8);
-                    box-shadow: 0 0 20px rgba(49, 61, 134, 0.4),
-                        inset 0 0 8px rgba(255, 255, 255, 0.1);
-                    transform: scale(1.02);
-                }
+            <!-- Step 4: Education & Career -->
+            <div class="form-step step-03" data-step="4">
+                <h2 class="header-title">Education & Career</h2>
+                <h5 class="heading-46 sub-head">Your journey and ambitions so far</h5>
+                <div class="form-field">
 
-                /* Text overlay */
-                .photo-preview-area p {
-                    font-size: 15px;
-                    color: rgba(255, 255, 255, 0.6);
-                    margin: 0;
-                    position: absolute;
-                    top: 50%;
-                    left: 50%;
-                    transform: translate(-50%, -50%);
-                    text-align: center;
-                }
+                    <label class="lable-input">Course(s) Completed<span class="text-span-48"> *</span></label>
+                    <input id="Course-Completed" class="biodata-input input-css" type="text" name="Course-Completed"
+                        placeholder="List your main courses or degrees (e.g., Bachelor’s, Master’s, Diploma)" required>
 
-                /* Previewed image */
-                .photo-preview-area img {
-                    width: 100%;
-                    height: 100%;
-                    object-fit: cover;
-                    display: none;
-                }
+                    <label class="lable-input">Institution(s) / University(ies)<span class="text-span-48">
+                            *</span></label>
+                    <input id="Institution" class="biodata-input input-css" type="text" name="Institution"
+                        placeholder="Enter the name of your institution or university" required>
 
-                /* Error message */
-                #photo-error {
-                    color: #ff6b6b;
-                    text-align: center;
-                    font-size: 15px;
-                    margin-top: 20px;
-                }
+                    <label class="lable-input">Year(s) of Completion<span class="text-span-48"> *</span></label>
+                    <input id="Year-of-Graduation" class="biodata-input input-css" type="text" name="Year-of-Graduation"
+                        placeholder="Enter the year(s) (e.g., 2023, 2017)" required>
 
-                /* Responsive */
-                @media (max-width: 768px) {
+                    <label class="lable-input">Current Occupation<span class="text-span-48"> *</span></label>
+                    <input id="current-occupation" class="biodata-input input-css" type="text" name="current-occupation"
+                        required>
+
+                    <label class="lable-input">Name of Company/Organization</label>
+                    <input id="company-name" class="biodata-input input-css" type="text" name="company-name">
+
+                    <label class="lable-input">Job Title</label>
+                    <input id="Job-Title" class="biodata-input input-css" type="text" name="Job-Title">
+
+                    <label class="lable-input">Brief description of your work</label>
+                    <textarea id="Work-Description" class="biodata-input input-css" name="Work-Description"></textarea>
+
+                    <label class="lable-input">What's your annual income? <span class="text-span-48"> *</span></label>
+                    <div class="annual-income">
+                        <select class="biodata-input input-css" name="income-currency" id="income-currency" required>
+                            <option value="" disabled selected hidden>Select Currency</option>
+
+                            <option value="USD">USD ($) - US Dollar</option>
+                            <option value="CAD">CAD (C$) - Canadian Dollar</option>
+                            <option value="AUD">AUD (A$) - Australian Dollar</option>
+                            <option value="GBP">GBP (£) - British Pound</option>
+                            <option value="SGD">SGD (S$) - Singapore Dollar</option>
+                            <option value="INR">INR (₹) - Indian Rupee</option>
+                            <option value="AED">AED (د.إ) - UAE Dirham</option>
+                        </select>
+                        <input class="biodata-input input-css" type="text" name="income-amount" id="income-amount"
+                            placeholder="Amount">
+
+                    </div>
+
+
+                    <label class="lable-input">Country of Residence<span class="text-span-48"> *</span></label>
+                    <select class="biodata-input input-css" name="Country-of-Residence" id="Country-of-Residence"
+                        required>
+                        <option value="" disabled selected hidden>Select Currency</option>
+                        <option value="AF">Afghanistan</option>
+                        <option value="AX">Åland Islands</option>
+                        <option value="AL">Albania</option>
+                        <option value="DZ">Algeria</option>
+                        <option value="AS">American Samoa</option>
+                        <option value="AD">Andorra</option>
+                        <option value="AO">Angola</option>
+                        <option value="AI">Anguilla</option>
+                        <option value="AQ">Antarctica</option>
+                        <option value="AG">Antigua and Barbuda</option>
+                        <option value="AR">Argentina</option>
+                        <option value="AM">Armenia</option>
+                        <option value="AW">Aruba</option>
+                        <option value="AU">Australia</option>
+                        <option value="AT">Austria</option>
+                        <option value="AZ">Azerbaijan</option>
+                        <option value="BS">Bahamas</option>
+                        <option value="BH">Bahrain</option>
+                        <option value="BD">Bangladesh</option>
+                        <option value="BB">Barbados</option>
+                        <option value="BY">Belarus</option>
+                        <option value="BE">Belgium</option>
+                        <option value="BZ">Belize</option>
+                        <option value="BJ">Benin</option>
+                        <option value="BM">Bermuda</option>
+                        <option value="BT">Bhutan</option>
+                        <option value="BO">Bolivia (Plurinational State of)</option>
+                        <option value="BA">Bosnia and Herzegovina</option>
+                        <option value="BW">Botswana</option>
+                        <option value="BV">Bouvet Island</option>
+                        <option value="BR">Brazil</option>
+                        <option value="IO">British Indian Ocean Territory</option>
+                        <option value="BN">Brunei Darussalam</option>
+                        <option value="BG">Bulgaria</option>
+                        <option value="BF">Burkina Faso</option>
+                        <option value="BI">Burundi</option>
+                        <option value="CV">Cabo Verde</option>
+                        <option value="KH">Cambodia</option>
+                        <option value="CM">Cameroon</option>
+                        <option value="CA">Canada</option>
+                        <option value="BQ">Caribbean Netherlands</option>
+                        <option value="KY">Cayman Islands</option>
+                        <option value="CF">Central African Republic</option>
+                        <option value="TD">Chad</option>
+                        <option value="CL">Chile</option>
+                        <option value="CN">China</option>
+                        <option value="CX">Christmas Island</option>
+                        <option value="CC">Cocos (Keeling) Islands</option>
+                        <option value="CO">Colombia</option>
+                        <option value="KM">Comoros</option>
+                        <option value="CG">Congo</option>
+                        <option value="CD">Congo, Democratic Republic of the</option>
+                        <option value="CK">Cook Islands</option>
+                        <option value="CR">Costa Rica</option>
+                        <option value="HR">Croatia</option>
+                        <option value="CU">Cuba</option>
+                        <option value="CW">Curaçao</option>
+                        <option value="CY">Cyprus</option>
+                        <option value="CZ">Czech Republic</option>
+                        <option value="CI">Côte d'Ivoire</option>
+                        <option value="DK">Denmark</option>
+                        <option value="DJ">Djibouti</option>
+                        <option value="DM">Dominica</option>
+                        <option value="DO">Dominican Republic</option>
+                        <option value="EC">Ecuador</option>
+                        <option value="EG">Egypt</option>
+                        <option value="SV">El Salvador</option>
+                        <option value="GQ">Equatorial Guinea</option>
+                        <option value="ER">Eritrea</option>
+                        <option value="EE">Estonia</option>
+                        <option value="SZ">Eswatini (Swaziland)</option>
+                        <option value="ET">Ethiopia</option>
+                        <option value="FK">Falkland Islands (Malvinas)</option>
+                        <option value="FO">Faroe Islands</option>
+                        <option value="FJ">Fiji</option>
+                        <option value="FI">Finland</option>
+                        <option value="FR">France</option>
+                        <option value="GF">French Guiana</option>
+                        <option value="PF">French Polynesia</option>
+                        <option value="TF">French Southern Territories</option>
+                        <option value="GA">Gabon</option>
+                        <option value="GM">Gambia</option>
+                        <option value="GE">Georgia</option>
+                        <option value="DE">Germany</option>
+                        <option value="GH">Ghana</option>
+                        <option value="GI">Gibraltar</option>
+                        <option value="GR">Greece</option>
+                        <option value="GL">Greenland</option>
+                        <option value="GD">Grenada</option>
+                        <option value="GP">Guadeloupe</option>
+                        <option value="GU">Guam</option>
+                        <option value="GT">Guatemala</option>
+                        <option value="GG">Guernsey</option>
+                        <option value="GN">Guinea</option>
+                        <option value="GW">Guinea-Bissau</option>
+                        <option value="GY">Guyana</option>
+                        <option value="HT">Haiti</option>
+                        <option value="HM">Heard Island and Mcdonald Islands</option>
+                        <option value="HN">Honduras</option>
+                        <option value="HK">Hong Kong</option>
+                        <option value="HU">Hungary</option>
+                        <option value="IS">Iceland</option>
+                        <option value="IN">India</option>
+                        <option value="ID">Indonesia</option>
+                        <option value="IR">Iran</option>
+                        <option value="IQ">Iraq</option>
+                        <option value="IE">Ireland</option>
+                        <option value="IM">Isle of Man</option>
+                        <option value="IL">Israel</option>
+                        <option value="IT">Italy</option>
+                        <option value="JM">Jamaica</option>
+                        <option value="JP">Japan</option>
+                        <option value="JE">Jersey</option>
+                        <option value="JO">Jordan</option>
+                        <option value="KZ">Kazakhstan</option>
+                        <option value="KE">Kenya</option>
+                        <option value="KI">Kiribati</option>
+                        <option value="KP">Korea, North</option>
+                        <option value="KR">Korea, South</option>
+                        <option value="XK">Kosovo</option>
+                        <option value="KW">Kuwait</option>
+                        <option value="KG">Kyrgyzstan</option>
+                        <option value="LA">Lao People's Democratic Republic</option>
+                        <option value="LV">Latvia</option>
+                        <option value="LB">Lebanon</option>
+                        <option value="LS">Lesotho</option>
+                        <option value="LR">Liberia</option>
+                        <option value="LY">Libya</option>
+                        <option value="LI">Liechtenstein</option>
+                        <option value="LT">Lithuania</option>
+                        <option value="LU">Luxembourg</option>
+                        <option value="MO">Macao</option>
+                        <option value="MK">Macedonia North</option>
+                        <option value="MG">Madagascar</option>
+                        <option value="MW">Malawi</option>
+                        <option value="MY">Malaysia</option>
+                        <option value="MV">Maldives</option>
+                        <option value="ML">Mali</option>
+                        <option value="MT">Malta</option>
+                        <option value="MH">Marshall Islands</option>
+                        <option value="MQ">Martinique</option>
+                        <option value="MR">Mauritania</option>
+                        <option value="MU">Mauritius</option>
+                        <option value="YT">Mayotte</option>
+                        <option value="MX">Mexico</option>
+                        <option value="FM">Micronesia</option>
+                        <option value="MD">Moldova</option>
+                        <option value="MC">Monaco</option>
+                        <option value="MN">Mongolia</option>
+                        <option value="ME">Montenegro</option>
+                        <option value="MS">Montserrat</option>
+                        <option value="MA">Morocco</option>
+                        <option value="MZ">Mozambique</option>
+                        <option value="MM">Myanmar (Burma)</option>
+                        <option value="NA">Namibia</option>
+                        <option value="NR">Nauru</option>
+                        <option value="NP">Nepal</option>
+                        <option value="NL">Netherlands</option>
+                        <option value="AN">Netherlands Antilles</option>
+                        <option value="NC">New Caledonia</option>
+                        <option value="NZ">New Zealand</option>
+                        <option value="NI">Nicaragua</option>
+                        <option value="NE">Niger</option>
+                        <option value="NG">Nigeria</option>
+                        <option value="NU">Niue</option>
+                        <option value="NF">Norfolk Island</option>
+                        <option value="MP">Northern Mariana Islands</option>
+                        <option value="NO">Norway</option>
+                        <option value="OM">Oman</option>
+                        <option value="PK">Pakistan</option>
+                        <option value="PW">Palau</option>
+                        <option value="PS">Palestine</option>
+                        <option value="PA">Panama</option>
+                        <option value="PG">Papua New Guinea</option>
+                        <option value="PY">Paraguay</option>
+                        <option value="PE">Peru</option>
+                        <option value="PH">Philippines</option>
+                        <option value="PN">Pitcairn Islands</option>
+                        <option value="PL">Poland</option>
+                        <option value="PT">Portugal</option>
+                        <option value="PR">Puerto Rico</option>
+                        <option value="QA">Qatar</option>
+                        <option value="RE">Reunion</option>
+                        <option value="RO">Romania</option>
+                        <option value="RU">Russian Federation</option>
+                        <option value="RW">Rwanda</option>
+                        <option value="BL">Saint Barthelemy</option>
+                        <option value="SH">Saint Helena</option>
+                        <option value="KN">Saint Kitts and Nevis</option>
+                        <option value="LC">Saint Lucia</option>
+                        <option value="MF">Saint Martin</option>
+                        <option value="PM">Saint Pierre and Miquelon</option>
+                        <option value="VC">Saint Vincent and the Grenadines</option>
+                        <option value="WS">Samoa</option>
+                        <option value="SM">San Marino</option>
+                        <option value="ST">Sao Tome and Principe</option>
+                        <option value="SA">Saudi Arabia</option>
+                        <option value="SN">Senegal</option>
+                        <option value="RS">Serbia</option>
+                        <option value="CS">Serbia and Montenegro</option>
+                        <option value="SC">Seychelles</option>
+                        <option value="SL">Sierra Leone</option>
+                        <option value="SG">Singapore</option>
+                        <option value="SX">Sint Maarten</option>
+                        <option value="SK">Slovakia</option>
+                        <option value="SI">Slovenia</option>
+                        <option value="SB">Solomon Islands</option>
+                        <option value="SO">Somalia</option>
+                        <option value="ZA">South Africa</option>
+                        <option value="GS">South Georgia and the South Sandwich Islands</option>
+                        <option value="SS">South Sudan</option>
+                        <option value="ES">Spain</option>
+                        <option value="LK">Sri Lanka</option>
+                        <option value="SD">Sudan</option>
+                        <option value="SR">Suriname</option>
+                        <option value="SJ">Svalbard and Jan Mayen</option>
+                        <option value="SE">Sweden</option>
+                        <option value="CH">Switzerland</option>
+                        <option value="SY">Syria</option>
+                        <option value="TW">Taiwan</option>
+                        <option value="TJ">Tajikistan</option>
+                        <option value="TZ">Tanzania</option>
+                        <option value="TH">Thailand</option>
+                        <option value="TL">Timor-Leste</option>
+                        <option value="TG">Togo</option>
+                        <option value="TK">Tokelau</option>
+                        <option value="TO">Tonga</option>
+                        <option value="TT">Trinidad and Tobago</option>
+                        <option value="TN">Tunisia</option>
+                        <option value="TR">Turkey (Türkiye)</option>
+                        <option value="TM">Turkmenistan</option>
+                        <option value="TC">Turks and Caicos Islands</option>
+                        <option value="TV">Tuvalu</option>
+                        <option value="UM">U.S. Outlying Islands</option>
+                        <option value="UG">Uganda</option>
+                        <option value="UA">Ukraine</option>
+                        <option value="AE">United Arab Emirates</option>
+                        <option value="GB">United Kingdom</option>
+                        <option value="US">United States</option>
+                        <option value="UY">Uruguay</option>
+                        <option value="UZ">Uzbekistan</option>
+                        <option value="VU">Vanuatu</option>
+                        <option value="VA">Vatican City Holy See</option>
+                        <option value="VE">Venezuela</option>
+                        <option value="VN">Vietnam</option>
+                        <option value="VG">Virgin Islands, British</option>
+                        <option value="VI">Virgin Islands, U.S</option>
+                        <option value="WF">Wallis and Futuna</option>
+                        <option value="EH">Western Sahara</option>
+                        <option value="YE">Yemen</option>
+                        <option value="ZM">Zambia</option>
+                        <option value="ZW">Zimbabwe</option>
+                    </select>
+
+                    <label class="lable-input">Citizenship</label>
+                    <div>
+                        <!-- Step 1: Citizenship -->
+                        <select id="citizenship" name="citizenship" class="input-css biodata-input">
+                            <option value="">Select your citizenship</option>
+                            <option value="Indian Citizen - Resident in India">Indian Citizen – Resident in India
+                            </option>
+                            <option value="Indian Citizen - Living Abroad">Indian Citizen – Living Abroad</option>
+                            <option value="OCI / PIO">OCI / PIO</option>
+                            <option value="Permanent Resident">Permanent Resident</option>
+                            <option value="Foreign Citizen">Foreign Citizen</option>
+                        </select>
+
+                        <!-- Dynamic Helper Text (hidden initially) -->
+                        <p id="visa-helper" style="display:none; font-size:14px; color:#fafafa; margin-top:8px;">
+                            Since you indicated you are living abroad or hold a foreign/PR status,
+                            please select your exact visa or residency type below.
+                            (Examples: F1/H1B/L1/OPT for USA, Skilled Worker/Tier 2/Graduate Visa for UK,
+                            UAE Work or Residency Visa, Canadian PR, Australian Student/Work Visa, etc.)
+                        </p>
+
+                        <!-- Step 2: Visa (hidden until triggered) -->
+                        <select id="visa-status" name="visa-status" style="display:none; margin-top:10px;"
+                            class="input-css biodata-input">
+                            <option value="">Select your visa type</option>
+                            <option value="F1 Student Visa">F1 Student Visa</option>
+                            <option value="H1B Work Visa">H1B Work Visa</option>
+                            <option value="L1 Work Visa">L1 Work Visa</option>
+                            <option value="OPT / CPT">OPT / CPT</option>
+                            <option value="Skilled Worker (UK)">Skilled Worker (UK)</option>
+                            <option value="Graduate / Tier 2 (UK)">Graduate / Tier 2 (UK)</option>
+                            <option value="UAE Work Visa">UAE Work Visa</option>
+                            <option value="UAE Residency Visa">UAE Residency Visa</option>
+                            <option value="Canada PR">Canada PR</option>
+                            <option value="Australia Work / Student Visa">Australia Work / Student Visa</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
+                    <script>
+                        const citizenship = document.getElementById('citizenship');
+                        const visa = document.getElementById('visa-status');
+                        const helper = document.getElementById('visa-helper');
+
+                        citizenship.addEventListener('change', function () {
+                            if (this.value.includes('Living Abroad') ||
+                                this.value.includes('Permanent Resident') ||
+                                this.value.includes('Foreign Citizen')) {
+                                visa.style.display = 'block';   // show visa options
+                                helper.style.display = 'block'; // show helper text
+                            } else {
+                                visa.style.display = 'none';    // hide visa
+                                helper.style.display = 'none';  // hide helper
+                                visa.value = '';                // reset value
+                            }
+                        });
+                    </script>
+
+                </div>
+            </div>
+
+            <!-- Step 5: Family Background -->
+            <div class="form-step step-04" data-step="5">
+                <h2 class="header-title">Family Background</h2>
+                <h5 class="heading-46 sub-head">Your roots and support system</h5>
+                <div class="form-field">
+
+                    <label class="lable-input">Father's Name<span class="text-span-48"> *</span></label>
+                    <div class="biodata-input-divider">
+                        <input id="Father-s-Name-first" class="biodata-input divider-1  input-css" type="text"
+                            name="Father-s-Name-first" placeholder="First Name" required>
+                        <input id="Father-s-Name-last" class="biodata-input divider-2  input-css" type="text"
+                            name="Father-s-Name-last" placeholder="Surname" required>
+                    </div>
+
+                    <label class="lable-input">Father's Occupation<span class="text-span-48"> *</span></label>
+                    <input id="Father-s-Occupation" class="biodata-input input-css" type="text"
+                        name="Father-s-Occupation" required>
+
+                    <label class="lable-input">Mother's Name<span class="text-span-48"> *</span></label>
+                    <div class="biodata-input-divider">
+                        <input id="Mother-s-Name-first" class="biodata-input divider-1  input-css" type="text"
+                            name="Mother-s-Name-first" placeholder="First Name" required>
+                        <input id="Mother-s-Name-last" class="biodata-input divider-2  input-css" type="text"
+                            name="Mother-s-Name-last" placeholder="Surname" required>
+                    </div>
+
+                    <label class="lable-input">Mother's Occupation<span class="text-span-48"> *</span></label>
+                    <input id="Mother-s-Occupation" class="biodata-input input-css" type="text"
+                        name="Mother-s-Occupation" required>
+
+                    <label class="lable-input">Sibling(s) – Name(s), Age, Occupation</label>
+                    <textarea id="sibling-details" class="biodata-input input-css" name="sibling-details"></textarea>
+
+                    <label class="lable-input">Family Type<span class="text-span-48"> *</span></label>
+                    <select id="Family-Type" class="biodata-input input-css" name="Family-Type" required>
+                        <option value="">Select</option>
+                        <option>Nuclear</option>
+                        <option>Joint</option>
+                        <option>Extended</option>
+                    </select>
+
+                    <label class="lable-input">Family values or expectations</label>
+                    <textarea id="Family-Values-Expectations" class="biodata-input input-css"
+                        name="Family-Values-Expectations"></textarea>
+
+                </div>
+            </div>
+
+
+            <!-- Step 6: Location & Contact -->
+            <div class="form-step step-05" data-step="6">
+                <h2 class="header-title">Location & Contact Info</h2>
+                <h5 class="heading-46 sub-head">We’ll never spam. Just matchmaking</h5>
+                <div class="form-field">
+
+                    <label class="lable-input">Your Residential Address<span class="text-span-48"> *</span></label>
+                    <textarea id="Residential-Address" class="biodata-input input-css" name="Residential-Address"
+                        required></textarea>
+
+                    <label class="lable-input">Your Permanent Address<span class="text-span-48"> *</span></label>
+                    <textarea id="Permanent-Address" class="biodata-input input-css" name="Permanent-Address"
+                        required></textarea>
+
+                    <label class="lable-input">Your Email ID<span class="text-span-48"> *</span></label>
+                    <input id="Email-ID" class="biodata-input input-css" type="email" name="Email-ID" required>
+
+                    <label class="lable-input">Your Whatsapp No (add country code)<span class="text-span-48">
+                            *</span></label>
+                    <input id="whatsapp-no" class="biodata-input input-css" type="text" name="whatsapp-no"
+                        placeholder="+91, +1 etc" required>
+
+                </div>
+            </div>
+
+
+            <!-- Step 7: Photo Upload -->
+            <div class="form-step step-06" data-step="7">
+                <h2 class="header-title">Upload Photos</h2>
+                <h5 class="heading-46 sub-head">First impressions matter</h5>
+                <h5 class="sub-head-1">Please Upload 4 clear photos of yourself (JPEG/PNG) *</h5>
+                <div class="photo-grid">
+                    <!-- Slot 1 -->
+                    <div class="photo-slot">
+                        <label for="photo-upload-1">Upload Headshots</label>
+                        <input type="file" id="photo-upload-1" name="photo-1" accept="image/*" required>
+                        <div id="photo-preview-area-1" class="photo-preview-area circle"
+                            onclick="document.getElementById('photo-upload-1').click()">
+                            <p id="photo-preview-text-1">Upload Headshot</p>
+                            <img id="photo-preview-img-1" src="#" alt="Headshot Preview">
+                        </div>
+                    </div>
+
+                    <!-- Slot 2 -->
+                    <div class="photo-slot">
+                        <label for="photo-upload-2">Upload Portrait</label>
+                        <input type="file" id="photo-upload-2" name="photo-2" accept="image/*" required>
+                        <div id="photo-preview-area-2" class="photo-preview-area circle"
+                            onclick="document.getElementById('photo-upload-2').click()">
+                            <p id="photo-preview-text-2">Upload Portrait</p>
+                            <img id="photo-preview-img-2" src="#" alt="Portrait Preview">
+                        </div>
+                    </div>
+
+                    <!-- Slot 3 -->
+                    <div class="photo-slot">
+                        <label for="photo-upload-3">Upload Casual Photo</label>
+                        <input type="file" id="photo-upload-3" name="photo-3" accept="image/*" required>
+                        <div id="photo-preview-area-3" class="photo-preview-area circle"
+                            onclick="document.getElementById('photo-upload-3').click()">
+                            <p id="photo-preview-text-3">Upload Casual</p>
+                            <img id="photo-preview-img-3" src="#" alt="Casual Preview">
+                        </div>
+                    </div>
+
+                    <!-- Slot 4 -->
+                    <div class="photo-slot full-length">
+                        <label for="photo-upload-4">Upload Full Length</label>
+                        <input type="file" id="photo-upload-4" name="photo-4" accept=".jpg,.jpeg,.png,.webp,.heic,.heif"
+                            required>
+                        <div id="photo-preview-area-4" class="photo-preview-area square-large"
+                            onclick="document.getElementById('photo-upload-4').click()">
+                            <p id="photo-preview-text-4">Upload Full-Length</p>
+                            <img id="photo-preview-img-4" src="#" alt="Full-Length Preview">
+                        </div>
+                    </div>
+                </div>
+
+                <p id="photo-error">Please upload all 4 photos to continue.</p>
+                <style>
+                    /* Grid layout — 3 top circles + 1 large below */
                     .photo-grid {
-                        grid-template-columns: repeat(2, 1fr);
-                        gap: 30px;
-                        width: 80%;
+                        display: grid;
+                        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+                        gap: 40px;
+                        justify-items: center;
+                        align-items: start;
+                        max-width: 1000px;
+                        margin: 0 auto;
                     }
 
+                    .photo-slot {
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        text-align: center;
+                        width: 100%;
+                    }
+
+                    /* Label above each slot */
+                    .photo-slot label {
+                        font-size: 15px;
+                        color: rgba(255, 255, 255, 0.8);
+                        margin-bottom: 10px;
+                    }
+
+                    /* Hide the file input, style preview area instead */
+                    .photo-slot input[type="file"] {
+                        display: none;
+                    }
+
+                    /* Shared style for circular and square boxes */
+                    .photo-preview-area {
+                        width: 200px;
+                        height: 200px;
+                        border: 2px dashed rgba(255, 255, 255, 0.25);
+                        background: rgba(255, 255, 255, 0.06);
+                        backdrop-filter: blur(10px) saturate(150%);
+                        -webkit-backdrop-filter: blur(10px) saturate(150%);
+                        border-radius: 16px;
+                        position: relative;
+                        overflow: hidden;
+                        transition: all 0.3s ease;
+                        box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.08),
+                            0 8px 20px rgba(0, 0, 0, 0.45);
+                        cursor: pointer;
+                    }
+
+                    /* Circle variant */
+                    .photo-preview-area.circle {
+                        border-radius: 50%;
+                        width: 180px;
+                        height: 180px;
+                    }
+
+                    /* Larger square for full-length photo */
                     .photo-slot.full-length {
-                        grid-column: span 2;
+                        grid-column: span 3;
+                        width: 100%;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
                     }
 
                     .photo-preview-area.square-large {
-                        width: 100%;
-                        max-width: 340px;
-                        height: 340px;
+                        width: 420px;
+                        height: 420px;
+                        border-radius: 20px;
                     }
+
+                    /* Hover glow */
+                    .photo-preview-area:hover {
+                        border-color: rgba(49, 61, 134, 0.8);
+                        box-shadow: 0 0 20px rgba(49, 61, 134, 0.4),
+                            inset 0 0 8px rgba(255, 255, 255, 0.1);
+                        transform: scale(1.02);
+                    }
+
+                    /* Text overlay */
+                    .photo-preview-area p {
+                        font-size: 15px;
+                        color: rgba(255, 255, 255, 0.6);
+                        margin: 0;
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                        text-align: center;
+                    }
+
+                    /* Previewed image */
+                    .photo-preview-area img {
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                        display: none;
+                    }
+
+                    /* Error message */
+                    #photo-error {
+                        color: #ff6b6b;
+                        text-align: center;
+                        font-size: 15px;
+                        margin-top: 20px;
+                    }
+
+                    /* Responsive */
+                    @media (max-width: 768px) {
+                        .photo-grid {
+                            grid-template-columns: repeat(2, 1fr);
+                            gap: 30px;
+                            width: 80%;
+                        }
+
+                        .photo-slot.full-length {
+                            grid-column: span 2;
+                        }
+
+                        .photo-preview-area.square-large {
+                            width: 100%;
+                            max-width: 340px;
+                            height: 340px;
+                        }
+                    }
+
+                    @media (max-width: 500px) {
+                        .photo-grid {
+                            grid-template-columns: 1fr;
+                            gap: 30px;
+                        }
+
+                        .photo-slot.full-length {
+                            grid-column: span 1;
+                        }
+                    }
+                </style>
+
+                <script>
+                    function setupPhotoPreview(inputId, imgId, textId) {
+                        const photoInput = document.getElementById(inputId);
+                        const photoPreviewImg = document.getElementById(imgId);
+                        const photoPreviewText = document.getElementById(textId);
+
+                        photoInput.addEventListener('change', function (event) {
+                            const file = event.target.files[0];
+                            if (file && file.type.startsWith('image/')) {
+                                const reader = new FileReader();
+                                reader.onload = function (e) {
+                                    photoPreviewImg.src = e.target.result;
+                                    photoPreviewImg.style.display = 'block';
+                                    photoPreviewText.style.display = 'none';
+                                };
+                                reader.readAsDataURL(file);
+                            } else {
+                                photoPreviewImg.src = '#';
+                                photoPreviewImg.style.display = 'none';
+                                photoPreviewText.textContent = 'Invalid file';
+                                photoPreviewText.style.display = 'block';
+                            }
+                        });
+                    }
+
+                    // Initialize all previews
+                    setupPhotoPreview('photo-upload-1', 'photo-preview-img-1', 'photo-preview-text-1');
+                    setupPhotoPreview('photo-upload-2', 'photo-preview-img-2', 'photo-preview-text-2');
+                    setupPhotoPreview('photo-upload-3', 'photo-preview-img-3', 'photo-preview-text-3');
+                    setupPhotoPreview('photo-upload-4', 'photo-preview-img-4', 'photo-preview-text-4');
+
+                    // Validation
+                    function validatePhotos() {
+                        const inputs = [
+                            document.getElementById('photo-upload-1'),
+                            document.getElementById('photo-upload-2'),
+                            document.getElementById('photo-upload-3'),
+                            document.getElementById('photo-upload-4')
+                        ];
+                        const errorMsg = document.getElementById('photo-error');
+                        const allUploaded = inputs.every(input => input.files.length > 0);
+
+                        errorMsg.style.display = allUploaded ? 'none' : 'block';
+                        return allUploaded;
+                    }
+
+                    const form = document.querySelector('form');
+                    if (form) {
+                        form.addEventListener('submit', function (event) {
+                            if (!validatePhotos()) event.preventDefault();
+                        });
+                    }
+                </script>
+            </div>
+
+            <!-- Step 8: Personality & Core Preferences -->
+            <div class="form-step step-07" data-step="8">
+                <h2 class="header-title">Personality & Core Preferences</h2>
+                <h5 class="heading-46 sub-head">Tell us about the kind of partner you truly connect with</h5>
+                <div class="form-field">
+
+                    <label class="lable-input">Describe your ideal partner<span class="text-span-48"> *</span></label>
+                    <textarea id="Ideal-Partner-Personality" class="biodata-input input-css"
+                        name="Ideal-Partner-Personality"
+                        placeholder="In your own words, describe your ideal partner’s personality, traits, and values you look for"
+                        required></textarea>
+
+                    <label class="lable-input">What are your deal-breakers?<span class="text-span-48"> *</span></label>
+                    <textarea id="Deal-Brakers" class="biodata-input input-css" name="Deal-Brakers" required></textarea>
+
+                    <label class="lable-input">Preferred education level<span class="text-span-48"> *</span></label>
+                    <input id="Education-Preference" class="biodata-input input-css" type="text"
+                        name="Education-Preference" required>
+
+                    <label class="lable-input">Preferred height range<span class="text-span-48"> *</span></label>
+                    <select id="height-Preference" class="biodata-input input-css" name="height-Preference" required>
+                        <option value="" disabled selected hidden>Select Height</option>
+                        <option>Below 5'0"</option>
+                        <option>5'0" – 5'3"</option>
+                        <option>5'4" – 5'6"</option>
+                        <option>5'7" – 5'9"</option>
+                        <option>5'10" – 6'0"</option>
+                        <option>Above 6'0"</option>
+                    </select>
+
+                    <label class="lable-input">Caste preference (if any)</label>
+                    <input id="Caste-Preference" class="biodata-input input-css" type="text" name="Caste-Preference">
+
+                </div>
+            </div>
+
+
+            <!-- Step 9: Lifestyle & Demographics -->
+            <div class="form-step step-08" data-step="9">
+                <h2 class="header-title">Lifestyle & Demographics</h2>
+                <h5 class="heading-46 sub-head">Share your expectations for lifestyle compatibility</h5>
+                <div class="form-field">
+
+                    <label class="lable-input">Preferred food habits<span class="text-span-48"> *</span></label>
+                    <select id="food-preference-partner" class="biodata-input input-css" name="food-preference-partner"
+                        required>
+                        <option value="" disabled selected hidden>Select</option>
+                        <option>Vegetarian / Vegan</option>
+                        <option>Eggetarian / Pescetarian</option>
+                        <option>Non-Vegetarian</option>
+                    </select>
+
+                    <label class="lable-input">Preferred marital status<span class="text-span-48"> *</span></label>
+                    <select id="marital-status-preference" class="biodata-input input-css"
+                        name="marital-status-preference" required>
+                        <option value="" disabled selected hidden>Select</option>
+                        <option>Doesn't Matter</option>
+                        <option>Never Married</option>
+                        <option>Divorced</option>
+                        <option>Widowed</option>
+                        <option>Single Parent</option>
+                    </select>
+
+                    <label class="lable-input">Preferred age range<span class="text-span-48"> *</span></label>
+                    <input id="Age-Range-Preference" class="biodata-input input-css" type="text"
+                        name="Age-Range-Preference" placeholder="Example: 25-31" required>
+
+                    <label class="lable-input">Preferred country/city<span class="text-span-48"> *</span></label>
+                    <input id="Country-Location-Preference" class="biodata-input input-css" type="text"
+                        name="Country-Location-Preference" required>
+
+                    <label class="lable-input">Open to other locations?<span class="text-span-48"> *</span></label>
+                    <select id="open-locations" class="biodata-input input-css" name="open-locations" required>
+                        <option value="">Select an option</option>
+                        <option>Yes</option>
+                        <option>No</option>
+                    </select>
+
+                    <div id="location-details" style="margin-top:10px; display:none;">
+                        <input type="text" id="other-locations" name="other-locations" class="biodata-input input-css"
+                            placeholder="Enter countries/cities">
+                    </div>
+
+
+                    <script>
+                        const openSelect = document.getElementById('open-locations');
+                        const locationDetails = document.getElementById('location-details');
+                        const otherLocations = document.getElementById('other-locations');
+
+                        openSelect.addEventListener('change', function () {
+                            if (this.value === "Yes") {
+                                locationDetails.style.display = "block";
+                            } else {
+                                locationDetails.style.display = "none";
+                                otherLocations.value = ""; // reset field
+                            }
+                        });
+                    </script>
+
+                    <label class="lable-input">Drinking & Smoking preference<span class="text-span-48"> *</span></label>
+                    <input id="Drinking-Smoking-Preference" class="biodata-input input-css" type="text"
+                        name="Drinking-Smoking-Preference" required>
+
+                </div>
+            </div>
+
+
+            <!-- Step 10: Relationship & Commitment -->
+            <div class="form-step step-09" data-step="10">
+                <h2 class="header-title">Relationship & Commitment Style</h2>
+                <h5 class="heading-46 sub-head">Help us understand your long-term vision</h5>
+                <div class="form-field">
+
+                    <label class="lable-input">One thing you hope your future partner understands about you<span
+                            class="text-span-48"> *</span></label>
+                    <textarea id="One-thing-Partner-Understands" class="biodata-input input-css"
+                        name="One-thing-Partner-Understands" required></textarea>
+
+                    <label class="lable-input">Why are you joining UrbanMatch?<span class="text-span-48">
+                            *</span></label>
+                    <select id="Reason-to-join-Urbanmatch" class="biodata-input input-css"
+                        name="Reason-to-join-Urbanmatch" required>
+                        <option value="" disabled selected hidden>Select</option>
+                        <option>Tired of apps</option>
+                        <option>Family Pressure</option>
+                        <option>Open to Possibilities</option>
+                        <option>Looking for serious commitment</option>
+                        <option>Want a thoughtful match</option>
+                    </select>
+
+                </div>
+            </div>
+
+
+            <!-- Step 11: Preview -->
+            <div class="form-step step-10 biodata-text" data-step="11">
+                <h2 class="header-title">BioData Preview</h2>
+                <div id="biodata-preview"> ⬇️⬇️ Download button at the end ⬇️⬇️</div>
+                <div class="main-bio-preview-container">
+                    <!-- PAGE 1 -->
+                    <div class="preview-bio-container">
+                        <div class="page">
+                            <div class="banner-block">
+                                <img src="https://cdn.prod.website-files.com/687f86a75046d84dda8fd435/68da9dca194b22e250176077_Biodata%20Banner.png"
+                                    alt="Biodata Banner" class="banner-img" />
+                            </div>
+
+                            <!-- Photo 1 positioned top-right below banner -->
+                            <div class="photo-floating">
+                                <div class="biodata-photo circle">
+                                    <img class="sync-photo-1" src="#" alt="Headshot" />
+                                </div>
+                            </div>
+
+                            <div class="preview-content">
+                                <h2 class="section-title">Personal Details</h2>
+                                <br>
+                                <div class="info-grid">
+                                    <div>Name</div>
+                                    <div class="bio-first-filler">: <span class="sync-full-name-first"></span> <span
+                                            class="sync-full-name-last exclude-backend"></span></div>
+                                    <div>Date and Time of Birth</div>
+                                    <div class="bio-first-filler">: <span class="sync-dob-time"></span></div>
+                                    <div>Place of Birth</div>
+                                    <div>: <span class="sync-place-of-birth"></span></div>
+                                    <div>Gender</div>
+                                    <div>: <span class="sync-gender"></span></div>
+                                    <div>Marital Status</div>
+                                    <div>: <span class="sync-marital-status"></span></div>
+                                    <div>Religion</div>
+                                    <div>: <span class="sync-religion"></span></div>
+                                    <div>Caste</div>
+                                    <div>: <span class="sync-caste"></span></div>
+                                    <div>Height</div>
+                                    <div>: <span class="sync-height"></span></div>
+                                    <div>Weight</div>
+                                    <div>: <span class="sync-weight"></span></div>
+                                    <div>Complexion</div>
+                                    <div>: <span class="sync-complexion"></span></div>
+                                    <div>Eating Habit</div>
+                                    <div>: <span class="sync-food-preference-personal"></span></div>
+                                    <div>Smoking Habit</div>
+                                    <div>: <span class="sync-smoking"></span></div>
+                                    <div>Drinking Habit</div>
+                                    <div>: <span class="sync-drinking"></span></div>
+                                    <div>Hobbies</div>
+                                    <div>: <span class="sync-hobby-passion"></span></div>
+                                    <div>3 words used by friends</div>
+                                    <div>: <span class="sync-3-words"></span></div>
+                                    <div>Languages</div>
+                                    <div>: <span class="sync-languages-spoken-fluently"></span></div>
+                                    <div>Unique Traits</div>
+                                    <div>: <span class="sync-unique-traits"></span></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- PAGE 2 -->
+                        <div class="page">
+                            <div class="banner-block">
+                                <img src="https://cdn.prod.website-files.com/687f86a75046d84dda8fd435/68da9dca194b22e250176077_Biodata%20Banner.png"
+                                    alt="Biodata Banner" class="banner-img" />
+                            </div>
+
+                            <div class="photo-floating">
+                                <div class="biodata-photo circle">
+                                    <img class="sync-photo-2" src="#" alt="Portrait" />
+                                </div>
+                            </div>
+
+                            <div class="preview-content">
+                                <h2 class="section-title">Educational Information</h2>
+                                <br>
+                                <div class="info-grid">
+                                    <div>Course(s)</div>
+                                    <div class="bio-first-filler">: <span class="sync-course-completed"></span></div>
+                                    <div>Institution(s)</div>
+                                    <div class="bio-first-filler">: <span class="sync-institution"></span></div>
+                                    <div>Year(s) of Completion</div>
+                                    <div>: <span class="sync-year-of-graduation"></span></div>
+                                </div>
+                                <br>
+                                <br>
+                                <br>
+                                <h2 class="section-title">Professional Information</h2>
+                                <br>
+                                <div class="info-grid">
+                                    <div>Occupation</div>
+                                    <div class="bio-first-filler">: <span class="sync-current-occupation"></span></div>
+                                    <div>Company</div>
+                                    <div class="bio-first-filler">: <span
+                                            class="sync-company-name exclude-backend"></span>
+                                    </div>
+                                    <div>Job Title</div>
+                                    <div>: <span class="sync-job-title"></span></div>
+                                    <div>Work Description</div>
+                                    <div>: <span class="sync-work-description"></span></div>
+                                    <div>Annual Income</div>
+                                    <div>: <span class="sync-annual-income"></span></div>
+                                    <div>Country of Residence</div>
+                                    <div>: <span class="sync-country-of-residence"></span></div>
+                                    <div>Citizenship</div>
+                                    <div>: <span class="sync-citizenship"></span></div>
+                                    <div>Visa Status</div>
+                                    <div>: <span class="sync-visa-status"></span></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- PAGE 3 -->
+                        <div class="page">
+                            <div class="banner-block">
+                                <img src="https://cdn.prod.website-files.com/687f86a75046d84dda8fd435/68da9dca194b22e250176077_Biodata%20Banner.png"
+                                    alt="Biodata Banner" class="banner-img" />
+                            </div>
+
+                            <div class="photo-floating">
+                                <div class="biodata-photo circle">
+                                    <img class="sync-photo-3" src="#" alt="Casual Photo" />
+                                </div>
+                            </div>
+
+                            <div class="preview-content">
+                                <h2 class="section-title">Family Details</h2>
+                                <br>
+                                <div class="info-grid">
+                                    <div>Father’s Name</div>
+                                    <div>: <span class="sync-father-s-name-first"></span> <span
+                                            class="sync-father-s-name-last exclude-backend"></span></div>
+                                    <div>Father’s Occupation</div>
+                                    <div>: <span class="sync-father-s-occupation"></span></div>
+                                    <div>Mother’s Name</div>
+                                    <div>: <span class="sync-mother-s-name-first"></span> <span
+                                            class="sync-mother-s-name-last exclude-backend"></span></div>
+                                    <div>Mother’s Occupation</div>
+                                    <div>: <span class="sync-mother-s-occupation"></span></div>
+                                    <div>Siblings</div>
+                                    <div>: <span class="sync-sibling-details exclude-backend"></span></div>
+                                    <div>Family Type</div>
+                                    <div>: <span class="sync-family-type"></span></div>
+                                    <div>Family Values</div>
+                                    <div>: <span class="sync-family-values-expectations"></span></div>
+                                </div>
+                                <br>
+                                <br>
+                                <br>
+                                <h2 class="section-title exclude-backend">Contact Details</h2>
+                                <br>
+                                <div class="info-grid exclude-backend">
+                                    <div>Residential Address</div>
+                                    <div>: <span class="sync-residential-address"></span></div>
+                                    <div>Permanent Address</div>
+                                    <div>: <span class="sync-permanent-address"></span></div>
+                                    <div>Email ID</div>
+                                    <div>: <span class="sync-email-id"></span></div>
+                                    <div>Whatsapp No</div>
+                                    <div>: <span class="sync-whatsapp-no"></span></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- PAGE 4 -->
+                        <div class="page">
+                            <div class="banner-block">
+                                <img src="https://cdn.prod.website-files.com/687f86a75046d84dda8fd435/68da9dca194b22e250176077_Biodata%20Banner.png"
+                                    alt="Biodata Banner" class="banner-img" />
+                            </div>
+
+                            <div class="preview-content">
+                                <h2 class="section-title">Partner Preferences</h2>
+                                <br>
+                                <div class="info-grid">
+                                    <div>Ideal Partner</div>
+                                    <div>: <span class="sync-ideal-partner-personality"></span></div>
+                                    <div>Deal Breakers</div>
+                                    <div>: <span class="sync-deal-brakers"></span></div>
+                                    <div>Education Preference</div>
+                                    <div>: <span class="sync-education-preference"></span></div>
+                                    <div>Height Preference</div>
+                                    <div>: <span class="sync-height-preference"></span></div>
+                                    <div>Caste Preference</div>
+                                    <div>: <span class="sync-caste-preference"></span></div>
+                                    <div>Food Habit Preference</div>
+                                    <div>: <span class="sync-food-preference-partner"></span></div>
+                                    <div>Marital Status Preference</div>
+                                    <div>: <span class="sync-marital-status-preference"></span></div>
+                                    <div>Age Range Preference</div>
+                                    <div>: <span class="sync-age-range-preference"></span></div>
+                                    <div>Country/City Preference</div>
+                                    <div>: <span class="sync-country-location-preference"></span></div>
+                                    <div>Open to Other Locations</div>
+                                    <div>: <span class="sync-other-location"></span></div>
+                                    <div>Drinking/Smoking Preference</div>
+                                    <div>: <span class="sync-drinking-smoking-preference"></span></div>
+                                    <div>One thing Partner should understand</div>
+                                    <div>: <span class="sync-one-thing-partner-understands"></span></div>
+                                    <div>Reason for Joining</div>
+                                    <div>: <span class="sync-reason-to-join-urbanmatch"></span></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- PAGE 5 — For Full-Length Photo -->
+                        <div class="page">
+                            <div class="banner-block">
+                                <img src="https://cdn.prod.website-files.com/687f86a75046d84dda8fd435/68da9dca194b22e250176077_Biodata%20Banner.png"
+                                    alt="Biodata Banner" class="banner-img" />
+                            </div>
+
+                            <div class="photo-large">
+                                <img class="sync-photo-4" src="#" alt="Full-Length Photo" />
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Download Button -->
+                    <div class="action-buttons no-print top-one">
+                        <!--	<div class="wa-sentence">Please download this BioData and send us on WhatsApp<a class="wa-biodata-send" href="https://api.whatsapp.com/send/?phone=%2B917041028329&text=Namaste&type=phone_number&app_absent=0"> +91 7041028329 </a></div>-->
+                        <button id="download-biodata">Download & Submit My Biodata</button>
+                    </div>
+                </div>
+            </div>
+            <div id="pdfLoader" class="pdf-loader">
+                <div class="pdf-loader-box">
+                    <div class="spinner"></div>
+                    <h3>Hold On</h3>
+                    <p>Do not leave the page</p>
+                    <p><strong>Your Biodata is getting prepared...</strong></p>
+                </div>
+            </div>
+
+            <style>
+                .pdf-loader {
+                    position: fixed;
+                    inset: 0;
+                    background: rgba(0, 0, 0, 0.65);
+                    display: none;
+                    justify-content: center;
+                    align-items: center;
+                    z-index: 99999;
                 }
 
-                @media (max-width: 500px) {
-                    .photo-grid {
-                        grid-template-columns: 1fr;
-                        gap: 30px;
-                    }
+                .pdf-loader-box {
+                    background: white;
+                    padding: 30px 40px;
+                    border-radius: 10px;
+                    text-align: center;
+                    width: 320px;
+                    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+                    font-family: Arial, sans-serif;
+                }
 
-                    .photo-slot.full-length {
-                        grid-column: span 1;
+                .spinner {
+                    width: 45px;
+                    height: 45px;
+                    border: 4px solid #eee;
+                    border-top: 4px solid #000;
+                    border-radius: 50%;
+                    margin: 0 auto 15px;
+                    animation: spin 0.8s linear infinite;
+                }
+
+                @keyframes spin {
+                    100% {
+                        transform: rotate(360deg);
                     }
                 }
             </style>
 
-            <script>
-                function setupPhotoPreview(inputId, imgId, textId) {
-                    const photoInput = document.getElementById(inputId);
-                    const photoPreviewImg = document.getElementById(imgId);
-                    const photoPreviewText = document.getElementById(textId);
+            <div id="pdf-render-area" style="position: fixed; left: -9999px; top: 0;"></div>
 
-                    photoInput.addEventListener('change', function (event) {
-                        const file = event.target.files[0];
-                        if (file && file.type.startsWith('image/')) {
-                            const reader = new FileReader();
-                            reader.onload = function (e) {
-                                photoPreviewImg.src = e.target.result;
-                                photoPreviewImg.style.display = 'block';
-                                photoPreviewText.style.display = 'none';
-                            };
-                            reader.readAsDataURL(file);
-                        } else {
-                            photoPreviewImg.src = '#';
-                            photoPreviewImg.style.display = 'none';
-                            photoPreviewText.textContent = 'Invalid file';
-                            photoPreviewText.style.display = 'block';
-                        }
-                    });
-                }
 
-                // Initialize all previews
-                setupPhotoPreview('photo-upload-1', 'photo-preview-img-1', 'photo-preview-text-1');
-                setupPhotoPreview('photo-upload-2', 'photo-preview-img-2', 'photo-preview-text-2');
-                setupPhotoPreview('photo-upload-3', 'photo-preview-img-3', 'photo-preview-text-3');
-                setupPhotoPreview('photo-upload-4', 'photo-preview-img-4', 'photo-preview-text-4');
-
-                // Validation
-                function validatePhotos() {
-                    const inputs = [
-                        document.getElementById('photo-upload-1'),
-                        document.getElementById('photo-upload-2'),
-                        document.getElementById('photo-upload-3'),
-                        document.getElementById('photo-upload-4')
-                    ];
-                    const errorMsg = document.getElementById('photo-error');
-                    const allUploaded = inputs.every(input => input.files.length > 0);
-
-                    errorMsg.style.display = allUploaded ? 'none' : 'block';
-                    return allUploaded;
-                }
-
-                const form = document.querySelector('form');
-                if (form) {
-                    form.addEventListener('submit', function (event) {
-                        if (!validatePhotos()) event.preventDefault();
-                    });
-                }
-            </script>
-        </div>
-
-        <!-- Step 8: Personality & Core Preferences -->
-        <div class="form-step step-07" data-step="8">
-            <h2 class="header-title">Personality & Core Preferences</h2>
-            <h5 class="heading-46 sub-head">Tell us about the kind of partner you truly connect with</h5>
-            <div class="form-field">
-
-                <label class="lable-input">Describe your ideal partner<span class="text-span-48"> *</span></label>
-                <textarea id="Ideal-Partner-Personality" class="biodata-input input-css"
-                    name="Ideal-Partner-Personality"
-                    placeholder="In your own words, describe your ideal partner’s personality, traits, and values you look for"
-                    required></textarea>
-
-                <label class="lable-input">What are your deal-breakers?<span class="text-span-48"> *</span></label>
-                <textarea id="Deal-Brakers" class="biodata-input input-css" name="Deal-Brakers" required></textarea>
-
-                <label class="lable-input">Preferred education level<span class="text-span-48"> *</span></label>
-                <input id="Education-Preference" class="biodata-input input-css" type="text" name="Education-Preference"
-                    required>
-
-                <label class="lable-input">Preferred height range<span class="text-span-48"> *</span></label>
-                <select id="height-Preference" class="biodata-input input-css" name="height-Preference" required>
-                    <option value="" disabled selected hidden>Select Height</option>
-                    <option>Below 5'0"</option>
-                    <option>5'0" – 5'3"</option>
-                    <option>5'4" – 5'6"</option>
-                    <option>5'7" – 5'9"</option>
-                    <option>5'10" – 6'0"</option>
-                    <option>Above 6'0"</option>
-                </select>
-
-                <label class="lable-input">Caste preference (if any)</label>
-                <input id="Caste-Preference" class="biodata-input input-css" type="text" name="Caste-Preference">
-
+            <!-- Navigation Buttons -->
+            <div class="form-navigation">
+                <button type="button" id="prev-btn" class="navigation-btn">Previous</button>
+                <button type="button" id="next-btn" class="navigation-btn">Next</button>
             </div>
+        </form>
+    </div>
+
+    <div id="mobileDiv" hidden>
+        <div class="form-step-1" data-step="1">
+            <img src="https://biodata.urbanmatch.co.in/logo.svg" class="logo" alt="">
+            <h2 class="header-title">Welcome to Your <span class="start-title"> Biodata Profile </span></h2>
+            <h5 class="heading-46 sub-head">To view the biodata layout clearly and access all details, we recommend
+                using a Desktop Device.</h5>
+            <img src="https://biodata.urbanmatch.co.in/heart.svg" class="start-heart" alt="">
         </div>
-
-
-        <!-- Step 9: Lifestyle & Demographics -->
-        <div class="form-step step-08" data-step="9">
-            <h2 class="header-title">Lifestyle & Demographics</h2>
-            <h5 class="heading-46 sub-head">Share your expectations for lifestyle compatibility</h5>
-            <div class="form-field">
-
-                <label class="lable-input">Preferred food habits<span class="text-span-48"> *</span></label>
-                <select id="food-preference-partner" class="biodata-input input-css" name="food-preference-partner"
-                    required>
-                    <option value="" disabled selected hidden>Select</option>
-                    <option>Vegetarian / Vegan</option>
-                    <option>Eggetarian / Pescetarian</option>
-                    <option>Non-Vegetarian</option>
-                </select>
-
-                <label class="lable-input">Preferred marital status<span class="text-span-48"> *</span></label>
-                <select id="marital-status-preference" class="biodata-input input-css" name="marital-status-preference"
-                    required>
-                    <option value="" disabled selected hidden>Select</option>
-                    <option>Doesn't Matter</option>
-                    <option>Never Married</option>
-                    <option>Divorced</option>
-                    <option>Widowed</option>
-                    <option>Single Parent</option>
-                </select>
-
-                <label class="lable-input">Preferred age range<span class="text-span-48"> *</span></label>
-                <input id="Age-Range-Preference" class="biodata-input input-css" type="text" name="Age-Range-Preference"
-                    placeholder="Example: 25-31" required>
-
-                <label class="lable-input">Preferred country/city<span class="text-span-48"> *</span></label>
-                <input id="Country-Location-Preference" class="biodata-input input-css" type="text"
-                    name="Country-Location-Preference" required>
-
-                <label class="lable-input">Open to other locations?<span class="text-span-48"> *</span></label>
-                <select id="open-locations" class="biodata-input input-css" name="open-locations" required>
-                    <option value="">Select an option</option>
-                    <option>Yes</option>
-                    <option>No</option>
-                </select>
-
-                <div id="location-details" style="margin-top:10px; display:none;">
-                    <input type="text" id="other-locations" name="other-locations" class="biodata-input input-css"
-                        placeholder="Enter countries/cities">
-                </div>
-
-
-                <script>
-                    const openSelect = document.getElementById('open-locations');
-                    const locationDetails = document.getElementById('location-details');
-                    const otherLocations = document.getElementById('other-locations');
-
-                    openSelect.addEventListener('change', function () {
-                        if (this.value === "Yes") {
-                            locationDetails.style.display = "block";
-                        } else {
-                            locationDetails.style.display = "none";
-                            otherLocations.value = ""; // reset field
-                        }
-                    });
-                </script>
-
-                <label class="lable-input">Drinking & Smoking preference<span class="text-span-48"> *</span></label>
-                <input id="Drinking-Smoking-Preference" class="biodata-input input-css" type="text"
-                    name="Drinking-Smoking-Preference" required>
-
-            </div>
-        </div>
-
-
-        <!-- Step 10: Relationship & Commitment -->
-        <div class="form-step step-09" data-step="10">
-            <h2 class="header-title">Relationship & Commitment Style</h2>
-            <h5 class="heading-46 sub-head">Help us understand your long-term vision</h5>
-            <div class="form-field">
-
-                <label class="lable-input">One thing you hope your future partner understands about you<span
-                        class="text-span-48"> *</span></label>
-                <textarea id="One-thing-Partner-Understands" class="biodata-input input-css"
-                    name="One-thing-Partner-Understands" required></textarea>
-
-                <label class="lable-input">Why are you joining UrbanMatch?<span class="text-span-48">
-                        *</span></label>
-                <select id="Reason-to-join-Urbanmatch" class="biodata-input input-css" name="Reason-to-join-Urbanmatch"
-                    required>
-                    <option value="" disabled selected hidden>Select</option>
-                    <option>Tired of apps</option>
-                    <option>Family Pressure</option>
-                    <option>Open to Possibilities</option>
-                    <option>Looking for serious commitment</option>
-                    <option>Want a thoughtful match</option>
-                </select>
-
-            </div>
-        </div>
-
-
-        <!-- Step 11: Preview -->
-        <div class="form-step step-10 biodata-text" data-step="11">
-            <h2 class="header-title">BioData Preview</h2>
-            <div id="biodata-preview"> ⬇️⬇️ Download button at the end ⬇️⬇️</div>
-            <div class="main-bio-preview-container">
-                <!-- PAGE 1 -->
-                <div class="preview-bio-container">
-                    <div class="page">
-                        <div class="banner-block">
-                            <img src="https://cdn.prod.website-files.com/687f86a75046d84dda8fd435/68da9dca194b22e250176077_Biodata%20Banner.png"
-                                alt="Biodata Banner" class="banner-img" />
-                        </div>
-
-                        <!-- Photo 1 positioned top-right below banner -->
-                        <div class="photo-floating">
-                            <div class="biodata-photo circle">
-                                <img class="sync-photo-1" src="#" alt="Headshot" />
-                            </div>
-                        </div>
-
-                        <div class="preview-content">
-                            <h2 class="section-title">Personal Details</h2>
-                            <br>
-                            <div class="info-grid">
-                                <div>Name</div>
-                                <div class="bio-first-filler">: <span class="sync-full-name-first"></span> <span
-                                        class="sync-full-name-last exclude-backend"></span></div>
-                                <div>Date and Time of Birth</div>
-                                <div class="bio-first-filler">: <span class="sync-dob-time"></span></div>
-                                <div>Place of Birth</div>
-                                <div>: <span class="sync-place-of-birth"></span></div>
-                                <div>Gender</div>
-                                <div>: <span class="sync-gender"></span></div>
-                                <div>Marital Status</div>
-                                <div>: <span class="sync-marital-status"></span></div>
-                                <div>Religion</div>
-                                <div>: <span class="sync-religion"></span></div>
-                                <div>Caste</div>
-                                <div>: <span class="sync-caste"></span></div>
-                                <div>Height</div>
-                                <div>: <span class="sync-height"></span></div>
-                                <div>Weight</div>
-                                <div>: <span class="sync-weight"></span></div>
-                                <div>Complexion</div>
-                                <div>: <span class="sync-complexion"></span></div>
-                                <div>Eating Habit</div>
-                                <div>: <span class="sync-food-preference-personal"></span></div>
-                                <div>Smoking Habit</div>
-                                <div>: <span class="sync-smoking"></span></div>
-                                <div>Drinking Habit</div>
-                                <div>: <span class="sync-drinking"></span></div>
-                                <div>Hobbies</div>
-                                <div>: <span class="sync-hobby-passion"></span></div>
-                                <div>3 words used by friends</div>
-                                <div>: <span class="sync-3-words"></span></div>
-                                <div>Languages</div>
-                                <div>: <span class="sync-languages-spoken-fluently"></span></div>
-                                <div>Unique Traits</div>
-                                <div>: <span class="sync-unique-traits"></span></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- PAGE 2 -->
-                    <div class="page">
-                        <div class="banner-block">
-                            <img src="https://cdn.prod.website-files.com/687f86a75046d84dda8fd435/68da9dca194b22e250176077_Biodata%20Banner.png"
-                                alt="Biodata Banner" class="banner-img" />
-                        </div>
-
-                        <div class="photo-floating">
-                            <div class="biodata-photo circle">
-                                <img class="sync-photo-2" src="#" alt="Portrait" />
-                            </div>
-                        </div>
-
-                        <div class="preview-content">
-                            <h2 class="section-title">Educational Information</h2>
-                            <br>
-                            <div class="info-grid">
-                                <div>Course(s)</div>
-                                <div class="bio-first-filler">: <span class="sync-course-completed"></span></div>
-                                <div>Institution(s)</div>
-                                <div class="bio-first-filler">: <span class="sync-institution"></span></div>
-                                <div>Year(s) of Completion</div>
-                                <div>: <span class="sync-year-of-graduation"></span></div>
-                            </div>
-                            <br>
-                            <br>
-                            <br>
-                            <h2 class="section-title">Professional Information</h2>
-                            <br>
-                            <div class="info-grid">
-                                <div>Occupation</div>
-                                <div class="bio-first-filler">: <span class="sync-current-occupation"></span></div>
-                                <div>Company</div>
-                                <div class="bio-first-filler">: <span class="sync-company-name exclude-backend"></span>
-                                </div>
-                                <div>Job Title</div>
-                                <div>: <span class="sync-job-title"></span></div>
-                                <div>Work Description</div>
-                                <div>: <span class="sync-work-description"></span></div>
-                                <div>Annual Income</div>
-                                <div>: <span class="sync-annual-income"></span></div>
-                                <div>Country of Residence</div>
-                                <div>: <span class="sync-country-of-residence"></span></div>
-                                <div>Citizenship</div>
-                                <div>: <span class="sync-citizenship"></span></div>
-                                <div>Visa Status</div>
-                                <div>: <span class="sync-visa-status"></span></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- PAGE 3 -->
-                    <div class="page">
-                        <div class="banner-block">
-                            <img src="https://cdn.prod.website-files.com/687f86a75046d84dda8fd435/68da9dca194b22e250176077_Biodata%20Banner.png"
-                                alt="Biodata Banner" class="banner-img" />
-                        </div>
-
-                        <div class="photo-floating">
-                            <div class="biodata-photo circle">
-                                <img class="sync-photo-3" src="#" alt="Casual Photo" />
-                            </div>
-                        </div>
-
-                        <div class="preview-content">
-                            <h2 class="section-title">Family Details</h2>
-                            <br>
-                            <div class="info-grid">
-                                <div>Father’s Name</div>
-                                <div>: <span class="sync-father-s-name-first"></span> <span
-                                        class="sync-father-s-name-last exclude-backend"></span></div>
-                                <div>Father’s Occupation</div>
-                                <div>: <span class="sync-father-s-occupation"></span></div>
-                                <div>Mother’s Name</div>
-                                <div>: <span class="sync-mother-s-name-first"></span> <span
-                                        class="sync-mother-s-name-last exclude-backend"></span></div>
-                                <div>Mother’s Occupation</div>
-                                <div>: <span class="sync-mother-s-occupation"></span></div>
-                                <div>Siblings</div>
-                                <div>: <span class="sync-sibling-details exclude-backend"></span></div>
-                                <div>Family Type</div>
-                                <div>: <span class="sync-family-type"></span></div>
-                                <div>Family Values</div>
-                                <div>: <span class="sync-family-values-expectations"></span></div>
-                            </div>
-                            <br>
-                            <br>
-                            <br>
-                            <h2 class="section-title exclude-backend">Contact Details</h2>
-                            <br>
-                            <div class="info-grid exclude-backend">
-                                <div>Residential Address</div>
-                                <div>: <span class="sync-residential-address"></span></div>
-                                <div>Permanent Address</div>
-                                <div>: <span class="sync-permanent-address"></span></div>
-                                <div>Email ID</div>
-                                <div>: <span class="sync-email-id"></span></div>
-                                <div>Whatsapp No</div>
-                                <div>: <span class="sync-whatsapp-no"></span></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- PAGE 4 -->
-                    <div class="page">
-                        <div class="banner-block">
-                            <img src="https://cdn.prod.website-files.com/687f86a75046d84dda8fd435/68da9dca194b22e250176077_Biodata%20Banner.png"
-                                alt="Biodata Banner" class="banner-img" />
-                        </div>
-
-                        <div class="preview-content">
-                            <h2 class="section-title">Partner Preferences</h2>
-                            <br>
-                            <div class="info-grid">
-                                <div>Ideal Partner</div>
-                                <div>: <span class="sync-ideal-partner-personality"></span></div>
-                                <div>Deal Breakers</div>
-                                <div>: <span class="sync-deal-brakers"></span></div>
-                                <div>Education Preference</div>
-                                <div>: <span class="sync-education-preference"></span></div>
-                                <div>Height Preference</div>
-                                <div>: <span class="sync-height-preference"></span></div>
-                                <div>Caste Preference</div>
-                                <div>: <span class="sync-caste-preference"></span></div>
-                                <div>Food Habit Preference</div>
-                                <div>: <span class="sync-food-preference-partner"></span></div>
-                                <div>Marital Status Preference</div>
-                                <div>: <span class="sync-marital-status-preference"></span></div>
-                                <div>Age Range Preference</div>
-                                <div>: <span class="sync-age-range-preference"></span></div>
-                                <div>Country/City Preference</div>
-                                <div>: <span class="sync-country-location-preference"></span></div>
-                                <div>Open to Other Locations</div>
-                                <div>: <span class="sync-other-location"></span></div>
-                                <div>Drinking/Smoking Preference</div>
-                                <div>: <span class="sync-drinking-smoking-preference"></span></div>
-                                <div>One thing Partner should understand</div>
-                                <div>: <span class="sync-one-thing-partner-understands"></span></div>
-                                <div>Reason for Joining</div>
-                                <div>: <span class="sync-reason-to-join-urbanmatch"></span></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- PAGE 5 — For Full-Length Photo -->
-                    <div class="page">
-                        <div class="banner-block">
-                            <img src="https://cdn.prod.website-files.com/687f86a75046d84dda8fd435/68da9dca194b22e250176077_Biodata%20Banner.png"
-                                alt="Biodata Banner" class="banner-img" />
-                        </div>
-
-                        <div class="photo-large">
-                            <img class="sync-photo-4" src="#" alt="Full-Length Photo" />
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- Download Button -->
-                <div class="action-buttons no-print top-one">
-                    <!--	<div class="wa-sentence">Please download this BioData and send us on WhatsApp<a class="wa-biodata-send" href="https://api.whatsapp.com/send/?phone=%2B917041028329&text=Namaste&type=phone_number&app_absent=0"> +91 7041028329 </a></div>-->
-                    <button id="download-biodata">Download & Submit My Biodata</button>
-                </div>
-            </div>
-        </div>
-        <div id="pdfLoader" class="pdf-loader">
-            <div class="pdf-loader-box">
-                <div class="spinner"></div>
-                <h3>Hold On</h3>
-                <p>Do not leave the page</p>
-                <p><strong>Your Biodata is getting prepared...</strong></p>
-            </div>
-        </div>
-
-        <style>
-            .pdf-loader {
-                position: fixed;
-                inset: 0;
-                background: rgba(0, 0, 0, 0.65);
-                display: none;
-                justify-content: center;
-                align-items: center;
-                z-index: 99999;
-            }
-
-            .pdf-loader-box {
-                background: white;
-                padding: 30px 40px;
-                border-radius: 10px;
-                text-align: center;
-                width: 320px;
-                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-                font-family: Arial, sans-serif;
-            }
-
-            .spinner {
-                width: 45px;
-                height: 45px;
-                border: 4px solid #eee;
-                border-top: 4px solid #000;
-                border-radius: 50%;
-                margin: 0 auto 15px;
-                animation: spin 0.8s linear infinite;
-            }
-
-            @keyframes spin {
-                100% {
-                    transform: rotate(360deg);
-                }
-            }
-        </style>
-
-        <div id="pdf-render-area" style="position: fixed; left: -9999px; top: 0;"></div>
-
-
-        <!-- Navigation Buttons -->
-        <div class="form-navigation">
-            <button type="button" id="prev-btn" class="navigation-btn">Previous</button>
-            <button type="button" id="next-btn" class="navigation-btn">Next</button>
-        </div>
-    </form>
-
+    </div>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
 
@@ -2577,6 +2629,4 @@
 
 </body>
 
-
 </html>
-
