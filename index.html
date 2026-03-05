@@ -2331,14 +2331,12 @@
                         "https://hook.eu2.make.com/gohbylatofadu662zuab2pqjhktbwvsd",
                         {
                             method: "POST",
+                            mode: "no-cors",
                             body: formData
                         }
                     );
 
-                    if (!response.ok) {
-                        throw new Error("Server error");
-                    }
-
+                    console.log("Webhook sent (no-cors mode)");
                     console.log("Webhook sent successfully");
 
                 } catch (error) {
