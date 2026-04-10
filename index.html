@@ -2184,48 +2184,40 @@
              * ------------------------------------------------------------- */
             async function generatePDF() {
 
-                const loader = document.getElementById("pdfLoader");
-                loader.style.display = "flex"; // SHOW POPUP
+                const pages = document.querySelectorAll(".page");
+                if (!pages.length) throw new Error("No .page elements found");
 
-                try {
-                    const pages = document.querySelectorAll(".page");
-                    if (!pages.length) throw new Error("No .page elements found");
+                const pdf = new jspdf.jsPDF("p", "mm", "a4");
+                let first = true;
 
-                    const pdf = new jspdf.jsPDF("p", "mm", "a4");
-                    let first = true;
+                for (let page of pages) {
+                    const clone = page.cloneNode(true);
+                    clone.style.position = "fixed";
+                    clone.style.left = "-9999px";
+                    clone.style.top = "0";
+                    clone.style.width = "794px";
+                    clone.style.minHeight = "1123px";
+                    clone.style.background = "white";
 
-                    for (let page of pages) {
-                        const clone = page.cloneNode(true);
-                        clone.style.position = "fixed";
-                        clone.style.left = "-9999px";
-                        clone.style.top = "0";
-                        clone.style.width = "794px";
-                        clone.style.minHeight = "1123px";
-                        clone.style.background = "white";
+                    document.body.appendChild(clone);
+                    await waitForImages(clone);
 
-                        document.body.appendChild(clone);
-                        await waitForImages(clone);
+                    const canvas = await html2canvas(clone, {
+                        scale: 2,
+                        useCORS: true,
+                        logging: false,
+                    });
 
-                        const canvas = await html2canvas(clone, {
-                            scale: 2,
-                            useCORS: true,
-                            logging: false,
-                        });
+                    const imgData = canvas.toDataURL("image/jpeg", 1.0);
 
-                        const imgData = canvas.toDataURL("image/jpeg", 1.0);
+                    if (!first) pdf.addPage();
+                    pdf.addImage(imgData, "JPEG", 0, 0, 210, 297);
+                    first = false;
 
-                        if (!first) pdf.addPage();
-                        pdf.addImage(imgData, "JPEG", 0, 0, 210, 297);
-                        first = false;
-
-                        clone.remove();
-                    }
-
-                    return pdf.output("blob");
-
-                } finally {
-                    loader.style.display = "none"; // HIDE POPUP
+                    clone.remove();
                 }
+
+                return pdf.output("blob");
             }
 
             async function generateBackendPDF() {
@@ -2350,12 +2342,17 @@
                         }
                     );
 
-                    if (!res.ok) throw new Error("Failed to get signed URL");
+                    if (res.status !== 200) {
+                        throw new Error(`Signed URL failed: ${res.status}`);
+                    }
 
                     const data = await res.json();
-                    const uploadURL = data?.urls?.[0]?.uploadURL;
 
-                    if (!uploadURL) throw new Error("No upload URL");
+                    if (!data?.urls || !data.urls.length) {
+                        throw new Error("Invalid signed URL response");
+                    }
+
+                    const uploadURL = data.urls[0].uploadURL;
 
                     // 🔹 Step 2: Upload to S3
                     const uploadRes = await fetch(uploadURL, {
@@ -2366,9 +2363,16 @@
                         body: file
                     });
 
-                    if (!uploadRes.ok) throw new Error("Upload failed");
+                    if (uploadRes.status !== 200) {
+                        throw new Error(`S3 upload failed: ${uploadRes.status}`);
+                    }
 
                     console.log("✅ Uploaded:", fileName);
+
+                    return {
+                        fileName,
+                        status: "success"
+                    };
 
                 } catch (err) {
                     console.error("❌ Error uploading:", fileName, err);
@@ -2439,7 +2443,7 @@
                 // 🚀 Upload All
                 // ==========================
                 try {
-                    const results = await Promise.allSettled(uploads);
+                    const results = await Promise.all(uploads);
 
                     const failed = results.filter(r => r.status === "rejected");
 
@@ -2459,7 +2463,11 @@
             /* -------------------------------------------------------------
              * 9. MAIN BUTTON
              * ------------------------------------------------------------- */
+
             document.getElementById("download-biodata").addEventListener("click", async () => {
+
+                const loader = document.getElementById("pdfLoader");
+                loader.style.display = "flex"; // ✅ START LOADER HERE
 
                 syncFields();
 
@@ -2467,14 +2475,19 @@
                     const pdfBlob = await generatePDF();
                     const backendPdfBlob = await generateBackendPDF();
 
-                    downloadPDF(pdfBlob);       // ⬅ YES PDF WILL DOWNLOAD
-                    await uploadPDFWebhook(pdfBlob, backendPdfBlob); // ⬅ PDF + IMAGES → BACKEND
+                    downloadPDF(pdfBlob); // ⬅ download happens but loader stays
 
-                    console.log("PDF + images sent successfully");
+                    await uploadPDFWebhook(pdfBlob, backendPdfBlob); // ⬅ WAIT until upload completes
+
+                    console.log("✅ PDF + images sent successfully");
+
+                    loader.style.display = "none"; // ✅ HIDE ONLY AFTER SUCCESS
 
                 } catch (err) {
                     console.error(err);
                     alert("Something went wrong.");
+
+                    loader.style.display = "none"; // ❌ also hide on failure
                 }
             });
 
