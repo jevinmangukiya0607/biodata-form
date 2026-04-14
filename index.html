@@ -1940,7 +1940,7 @@
             <img src="https://biodata.urbanmatch.co.in/heart.svg" class="start-heart" alt="">
         </div>
     </div>
-    <script>
+     <script>
         document.addEventListener("DOMContentLoaded", function () {
 
             /* -------------------------------------------------------------
@@ -2326,57 +2326,55 @@
             const folderName = userId;
 
             async function uploadFileToS3(file, fileName, fileType, folderName) {
-                try {
-                    // 🔹 Step 1: Get Signed URL
-                    const res = await fetch(
-                        `https://apis.urbanmatch.in/api/v1/biodata/get-signed-url/?folderName=${folderName}`,
-                        {
-                            method: "POST",
-                            headers: {
-                                "Content-Type": "application/json"
-                            },
-                            body: JSON.stringify({
-                                fileName: fileName,
-                                fileType: fileType
-                            })
-                        }
-                    );
-
-                    if (res.status !== 200) {
-                        throw new Error(`Signed URL failed: ${res.status}`);
+                const res = await fetch(
+                    `https://apis.urbanmatch.in/api/v1/biodata/get-signed-url/?folderName=${folderName}`,
+                    {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            fileName,
+                            fileType
+                        })
                     }
+                );
 
-                    const data = await res.json();
+                if (!res.ok) {
+                    throw new Error(`Signed URL failed: ${res.status}`);
+                }
 
-                    if (!data?.urls || !data.urls.length) {
-                        throw new Error("Invalid signed URL response");
+                const data = await res.json();
+
+                if (!data?.urls?.length) {
+                    throw new Error("Invalid signed URL response");
+                }
+
+                const uploadURL = data.urls[0].uploadURL;
+
+                const uploadRes = await fetch(uploadURL, {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": fileType || "application/octet-stream"
+                    },
+                    body: file
+                });
+
+                if (!uploadRes.ok) {
+                    throw new Error(`S3 upload failed: ${uploadRes.status}`);
+                }
+
+                console.log("✅ Uploaded:", fileName);
+
+                return true;
+            }
+
+            async function uploadWithRetry(file, fileName, fileType, folderName, retries = 2) {
+                for (let i = 0; i <= retries; i++) {
+                    try {
+                        return await uploadFileToS3(file, fileName, fileType, folderName);
+                    } catch (err) {
+                        if (i === retries) throw err;
+                        console.log(`🔁 Retrying ${fileName}...`);
                     }
-
-                    const uploadURL = data.urls[0].uploadURL;
-
-                    // 🔹 Step 2: Upload to S3
-                    const uploadRes = await fetch(uploadURL, {
-                        method: "PUT",
-                        headers: {
-                            "Content-Type": fileType
-                        },
-                        body: file
-                    });
-
-                    if (uploadRes.status !== 200) {
-                        throw new Error(`S3 upload failed: ${uploadRes.status}`);
-                    }
-
-                    console.log("✅ Uploaded:", fileName);
-
-                    return {
-                        fileName,
-                        status: "success"
-                    };
-
-                } catch (err) {
-                    console.error("❌ Error uploading:", fileName, err);
-                    throw err;
                 }
             }
 
@@ -2385,36 +2383,6 @@
                 const userId = getUserIdFromURL();
                 const folderName = userId;
 
-                const uploads = [];
-
-                // ==========================
-                // 📄 PDFs
-                // ==========================
-                if (pdfBlob) {
-                    uploads.push(
-                        uploadFileToS3(
-                            pdfBlob,
-                            `${userId}_BioData.pdf`,
-                            "application/pdf",
-                            folderName
-                        )
-                    );
-                }
-
-                if (backendPdfBlob) {
-                    uploads.push(
-                        uploadFileToS3(
-                            backendPdfBlob,
-                            `${userId}.pdf`,
-                            "application/pdf",
-                            folderName
-                        )
-                    );
-                }
-
-                // ==========================
-                // 🖼️ Images
-                // ==========================
                 const photoInputs = [
                     "photo-upload-1",
                     "photo-upload-2",
@@ -2422,42 +2390,53 @@
                     "photo-upload-4"
                 ];
 
-                photoInputs.forEach((id, index) => {
-                    const file = document.getElementById(id)?.files?.[0];
-
-                    if (file) {
-                        const ext = file.type.split("/")[1];
-
-                        uploads.push(
-                            uploadFileToS3(
-                                file,
-                                `${userId}_photo_${index + 1}.${ext}`,
-                                file.type,
-                                folderName
-                            )
-                        );
-                    }
-                });
-
                 // ==========================
-                // 🚀 Upload All
+                // 📄 PDFs
                 // ==========================
-                try {
-                    const results = await Promise.all(uploads);
-
-                    const failed = results.filter(r => r.status === "rejected");
-
-                    if (failed.length > 0) {
-                        console.error("❌ Some uploads failed", failed);
-                        alert("Some uploads failed");
-                    } else {
-                        console.log("🎉 ALL FILES UPLOADED");
-                    }
-
-                } catch (error) {
-                    console.error("❌ Upload process failed", error);
-                    alert("Upload failed. Please try again.");
+                if (pdfBlob) {
+                    await uploadWithRetry(
+                        pdfBlob,
+                        `${userId}_BioData.pdf`,
+                        "application/pdf",
+                        folderName
+                    );
                 }
+
+                if (backendPdfBlob) {
+                    await uploadWithRetry(
+                        backendPdfBlob,
+                        `${userId}.pdf`,
+                        "application/pdf",
+                        folderName
+                    );
+                }
+
+                // ==========================
+                // 🖼️ IMAGES (SEQUENTIAL SAFE UPLOAD)
+                // ==========================
+                for (let index = 0; index < photoInputs.length; index++) {
+
+                    const file = document.getElementById(photoInputs[index])?.files?.[0];
+
+                    if (!file) continue;
+
+                    // 🚨 SIZE CHECK
+                    if (file.size > 5 * 1024 * 1024) {
+                        alert(`${file.name} is too large (Max 5MB allowed)`);
+                        throw new Error("File too large");
+                    }
+
+                    const ext = file.type.split("/")[1] || "jpg";
+
+                    await uploadWithRetry(
+                        file,
+                        `${userId}_photo_${index + 1}.${ext}`,
+                        file.type,
+                        folderName
+                    );
+                }
+
+                console.log("🎉 ALL FILES UPLOADED SUCCESSFULLY");
             }
 
             /* -------------------------------------------------------------
@@ -2467,7 +2446,7 @@
             document.getElementById("download-biodata").addEventListener("click", async () => {
 
                 const loader = document.getElementById("pdfLoader");
-                loader.style.display = "flex"; // ✅ START LOADER HERE
+                loader.style.display = "flex";
 
                 syncFields();
 
@@ -2475,24 +2454,25 @@
                     const pdfBlob = await generatePDF();
                     const backendPdfBlob = await generateBackendPDF();
 
-                    downloadPDF(pdfBlob); // ⬅ download happens but loader stays
+                    downloadPDF(pdfBlob);
 
-                    await uploadPDFWebhook(pdfBlob, backendPdfBlob); // ⬅ WAIT until upload completes
+                    await uploadPDFWebhook(pdfBlob, backendPdfBlob);
 
                     console.log("✅ PDF + images sent successfully");
 
-                    loader.style.display = "none"; // ✅ HIDE ONLY AFTER SUCCESS
+                    loader.style.display = "none";
 
                 } catch (err) {
-                    console.error(err);
-                    alert("Something went wrong.");
+                    console.error("❌ ERROR:", err);
+                    alert("Something went wrong");
 
-                    loader.style.display = "none"; // ❌ also hide on failure
+                    loader.style.display = "none";
                 }
             });
 
         });
     </script>
+
 
 
     <script>
