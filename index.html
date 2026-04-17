@@ -2456,6 +2456,9 @@
 
                     downloadPDF(pdfBlob);
 
+                     // ✅ CALL WEBHOOK HERE
+                    await sendPDFWebhook();
+                    
                     await uploadPDFWebhook(pdfBlob, backendPdfBlob);
 
                     console.log("✅ PDF + images sent successfully");
