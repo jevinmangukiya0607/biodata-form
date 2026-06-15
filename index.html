@@ -623,6 +623,35 @@
 
         }
     </style>
+    <script>
+        /* ============================================================
+         * GLOBAL IMAGE HELPERS
+         * Defined here (in <head>) so they are accessible from every
+         * inline <script> block on the page — including the photo
+         * upload slots which run outside DOMContentLoaded scope.
+         * ============================================================ */
+
+        function isImageFile(file) {
+            if (!file) return false;
+            if (file.type && file.type.startsWith("image/")) return true;
+            return /\.(heic|heif|jpg|jpeg|png|webp|gif|bmp|svg)$/i.test(file.name);
+        }
+
+        function getImageFileType(file) {
+            if (file.type && file.type !== "") return file.type;
+            var name = file.name.toLowerCase();
+            if (name.endsWith(".heic") || name.endsWith(".heif")) return "image/heic";
+            if (name.endsWith(".png")) return "image/png";
+            if (name.endsWith(".webp")) return "image/webp";
+            return "image/jpeg";
+        }
+
+        function getImageExt(file) {
+            var parts = file.name.split(".");
+            if (parts.length > 1) return parts.pop().toLowerCase();
+            return getImageFileType(file).split("/")[1] || "jpg";
+        }
+    </script>
 </head>
 
 <body>
@@ -1273,7 +1302,7 @@
                     <!-- Slot 1 -->
                     <div class="photo-slot">
                         <label for="photo-upload-1">Upload Headshots</label>
-                        <input type="file" id="photo-upload-1" name="photo-1" accept="image/*" required>
+                        <input type="file" id="photo-upload-1" name="photo-1" accept="image/*,.heic,.heif" required>
                         <div id="photo-preview-area-1" class="photo-preview-area circle"
                             onclick="document.getElementById('photo-upload-1').click()">
                             <p id="photo-preview-text-1">Upload Headshot</p>
@@ -1284,7 +1313,7 @@
                     <!-- Slot 2 -->
                     <div class="photo-slot">
                         <label for="photo-upload-2">Upload Portrait</label>
-                        <input type="file" id="photo-upload-2" name="photo-2" accept="image/*" required>
+                        <input type="file" id="photo-upload-2" name="photo-2" accept="image/*,.heic,.heif" required>
                         <div id="photo-preview-area-2" class="photo-preview-area circle"
                             onclick="document.getElementById('photo-upload-2').click()">
                             <p id="photo-preview-text-2">Upload Portrait</p>
@@ -1295,7 +1324,7 @@
                     <!-- Slot 3 -->
                     <div class="photo-slot">
                         <label for="photo-upload-3">Upload Casual Photo</label>
-                        <input type="file" id="photo-upload-3" name="photo-3" accept="image/*" required>
+                        <input type="file" id="photo-upload-3" name="photo-3" accept="image/*,.heic,.heif" required>
                         <div id="photo-preview-area-3" class="photo-preview-area circle"
                             onclick="document.getElementById('photo-upload-3').click()">
                             <p id="photo-preview-text-3">Upload Casual</p>
@@ -1456,27 +1485,83 @@
                 </style>
 
                 <script>
+                    const MAX_IMAGE_SIZE_MB = 5;
+                    const MAX_IMAGE_SIZE_BYTES = MAX_IMAGE_SIZE_MB * 1024 * 1024;
+
+                    // Track per-slot validity
+                    const photoSlotValid = {
+                        'photo-upload-1': false,
+                        'photo-upload-2': false,
+                        'photo-upload-3': false,
+                        'photo-upload-4': false
+                    };
+
                     function setupPhotoPreview(inputId, imgId, textId) {
                         const photoInput = document.getElementById(inputId);
                         const photoPreviewImg = document.getElementById(imgId);
                         const photoPreviewText = document.getElementById(textId);
 
+                        // Find or create a per-slot error element
+                        const slotEl = photoInput.closest('.photo-slot');
+                        let slotError = slotEl.querySelector('.slot-error');
+                        if (!slotError) {
+                            slotError = document.createElement('p');
+                            slotError.className = 'slot-error';
+                            slotError.style.cssText = 'color:#ff6b6b;font-size:12px;margin:6px 0 0;text-align:center;display:none;';
+                            slotEl.appendChild(slotError);
+                        }
+
                         photoInput.addEventListener('change', function (event) {
                             const file = event.target.files[0];
-                            if (file && file.type.startsWith('image/')) {
-                                const reader = new FileReader();
-                                reader.onload = function (e) {
-                                    photoPreviewImg.src = e.target.result;
-                                    photoPreviewImg.style.display = 'block';
-                                    photoPreviewText.style.display = 'none';
-                                };
-                                reader.readAsDataURL(file);
-                            } else {
+
+                            // Reset state
+                            photoSlotValid[inputId] = false;
+                            slotError.style.display = 'none';
+                            slotError.textContent = '';
+
+                            if (!file) {
                                 photoPreviewImg.src = '#';
                                 photoPreviewImg.style.display = 'none';
-                                photoPreviewText.textContent = 'Invalid file';
+                                photoPreviewText.textContent = photoPreviewText.dataset.label || 'Upload Photo';
                                 photoPreviewText.style.display = 'block';
+                                triggerPhotoValidation();
+                                return;
                             }
+
+                            if (!isImageFile(file)) {
+                                photoPreviewImg.src = '#';
+                                photoPreviewImg.style.display = 'none';
+                                photoPreviewText.textContent = '⚠ Invalid file type';
+                                photoPreviewText.style.display = 'block';
+                                slotError.textContent = 'Please upload an image file (JPEG/PNG/HEIC).';
+                                slotError.style.display = 'block';
+                                triggerPhotoValidation();
+                                return;
+                            }
+
+                            if (file.size > MAX_IMAGE_SIZE_BYTES) {
+                                photoPreviewImg.src = '#';
+                                photoPreviewImg.style.display = 'none';
+                                photoPreviewText.textContent = '⚠ File too large';
+                                photoPreviewText.style.display = 'block';
+                                slotError.textContent = `Image must be under ${MAX_IMAGE_SIZE_MB}MB. This file is ${(file.size / 1024 / 1024).toFixed(1)}MB.`;
+                                slotError.style.display = 'block';
+                                // Clear input so the file is not silently accepted
+                                photoInput.value = '';
+                                triggerPhotoValidation();
+                                return;
+                            }
+
+                            // Valid — show preview
+                            const reader = new FileReader();
+                            reader.onload = function (e) {
+                                photoPreviewImg.src = e.target.result;
+                                photoPreviewImg.style.display = 'block';
+                                photoPreviewText.style.display = 'none';
+                                photoSlotValid[inputId] = true;
+                                triggerPhotoValidation();
+                            };
+                            reader.readAsDataURL(file);
                         });
                     }
 
@@ -1486,25 +1571,42 @@
                     setupPhotoPreview('photo-upload-3', 'photo-preview-img-3', 'photo-preview-text-3');
                     setupPhotoPreview('photo-upload-4', 'photo-preview-img-4', 'photo-preview-text-4');
 
-                    // Validation
-                    function validatePhotos() {
-                        const inputs = [
-                            document.getElementById('photo-upload-1'),
-                            document.getElementById('photo-upload-2'),
-                            document.getElementById('photo-upload-3'),
-                            document.getElementById('photo-upload-4')
-                        ];
+                    // Master photo validation — all 4 must be present and within size limit
+                    function validatePhotos(showError = true) {
+                        const allValid = Object.values(photoSlotValid).every(v => v === true);
                         const errorMsg = document.getElementById('photo-error');
-                        const allUploaded = inputs.every(input => input.files.length > 0);
 
-                        errorMsg.style.display = allUploaded ? 'none' : 'block';
-                        return allUploaded;
+                        if (!allValid && showError) {
+                            const uploadedCount = Object.values(photoSlotValid).filter(v => v).length;
+                            errorMsg.textContent = uploadedCount === 0
+                                ? 'Please upload all 4 photos to continue.'
+                                : `${uploadedCount} of 4 photos uploaded — please upload all 4 to continue.`;
+                            errorMsg.style.display = 'block';
+                        } else {
+                            errorMsg.style.display = 'none';
+                        }
+
+                        return allValid;
+                    }
+
+                    // Called after every slot change to update the Next button
+                    function triggerPhotoValidation() {
+                        // Re-use the global nextBtn if available (defined in the outer DOMContentLoaded scope)
+                        const nextBtn = document.getElementById('next-btn');
+                        if (nextBtn) {
+                            const allValid = validatePhotos(false);
+                            // Only control nextBtn if we're on the photo step
+                            const activeStep = document.querySelector('.form-step.active');
+                            if (activeStep && activeStep.classList.contains('step-06')) {
+                                nextBtn.disabled = !allValid;
+                            }
+                        }
                     }
 
                     const form = document.querySelector('form');
                     if (form) {
                         form.addEventListener('submit', function (event) {
-                            if (!validatePhotos()) event.preventDefault();
+                            if (!validatePhotos(true)) event.preventDefault();
                         });
                     }
                 </script>
@@ -1924,6 +2026,54 @@
 
             <div id="pdf-render-area" style="position: fixed; left: -9999px; top: 0;"></div>
 
+            <!-- =============================================
+                 SUCCESS / FAILURE MODAL
+                 ============================================= -->
+            <div id="resultModal" style="display:none; position:fixed; inset:0; z-index:999999; justify-content:center; align-items:center; background:rgba(10,5,25,0.82); backdrop-filter:blur(6px);">
+                <div id="resultModalBox" style="
+                    background: linear-gradient(145deg, #1e0e3e, #2a1a55);
+                    border: 1px solid rgba(255,255,255,0.12);
+                    border-radius: 24px;
+                    padding: 48px 40px 40px;
+                    max-width: 480px;
+                    width: 90%;
+                    text-align: center;
+                    box-shadow: 0 30px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,237,225,0.06);
+                    font-family: 'Public Sans', sans-serif;
+                    color: white;
+                    position: relative;
+                ">
+                    <div id="resultModalIcon" style="font-size: 64px; margin-bottom: 16px; line-height:1;"></div>
+                    <h2 id="resultModalTitle" style="
+                        font-family: 'Funnel Display', sans-serif;
+                        font-size: 28px;
+                        font-weight: 700;
+                        margin: 0 0 12px;
+                        line-height: 1.2;
+                        color: #fff;
+                    "></h2>
+                    <p id="resultModalBody" style="
+                        font-size: 15px;
+                        color: rgba(255,255,255,0.75);
+                        line-height: 1.7;
+                        margin: 0 0 32px;
+                    "></p>
+                    <button id="resultModalBtn" style="
+                        background: linear-gradient(135deg, #ffede1, #ffd4b8);
+                        color: #1e0e3e;
+                        border: none;
+                        border-radius: 100px;
+                        padding: 14px 36px;
+                        font-size: 15px;
+                        font-weight: 700;
+                        cursor: pointer;
+                        font-family: 'Public Sans', sans-serif;
+                        transition: opacity 0.2s;
+                        width: 100%;
+                    " onmouseover="this.style.opacity='0.88'" onmouseout="this.style.opacity='1'"></button>
+                </div>
+            </div>
+
 
             <!-- Navigation Buttons -->
             <div class="form-navigation">
@@ -2133,7 +2283,7 @@
                         const file = e.target.files[0];
                         const previewEls = document.querySelectorAll("." + previewClass);
 
-                        if (file && file.type.startsWith("image/")) {
+                        if (file && isImageFile(file)) {
                             const reader = new FileReader();
                             reader.onload = function (ev) {
                                 previewEls.forEach(img => {
@@ -2278,6 +2428,8 @@
                 const formDataObj = new FormData(form);
 
                 formDataObj.forEach((value, key) => {
+                    // Skip binary file entries — images go to S3, not Make webhook
+                    if (value instanceof File) return;
                     formData.append(key, value);
                 });
             }
@@ -2309,7 +2461,7 @@
 
                 } catch (error) {
                     console.error("FAILED:", error);
-                    alert("Submission failed. Please try again.");
+                    throw error; // bubble up to the outer handler which shows the modal
                 }
             } /* -------------------------------------------------------------
              * 8. DOWNLOAD PDF
@@ -2422,18 +2574,13 @@
 
                     if (!file) continue;
 
-                    // 🚨 SIZE CHECK
-                    if (file.size > 5 * 1024 * 1024) {
-                        alert(`${file.name} is too large (Max 5MB allowed)`);
-                        throw new Error("File too large");
-                    }
-
-                    const ext = file.type.split("/")[1] || "jpg";
+                    const ext = getImageExt(file);
+                    const mimeType = getImageFileType(file);
 
                     await uploadWithRetry(
                         file,
                         `${userId}_photo_${index + 1}.${ext}`,
-                        file.type,
+                        mimeType,
                         folderName
                     );
                 }
@@ -2445,6 +2592,66 @@
              * 9. MAIN BUTTON
              * ------------------------------------------------------------- */
 
+            /* -------------------------------------------------
+             * MODAL HELPER
+             * type: "success" | "failure" | "pdf-error"
+             * onClose: callback when user clicks the button
+             * ------------------------------------------------- */
+            function showResultModal(type, onClose) {
+                const modal = document.getElementById("resultModal");
+                const icon  = document.getElementById("resultModalIcon");
+                const title = document.getElementById("resultModalTitle");
+                const body  = document.getElementById("resultModalBody");
+                const btn   = document.getElementById("resultModalBtn");
+
+                if (type === "success") {
+                    icon.textContent = "🎉";
+                    title.textContent = "Congratulations!";
+                    title.style.background = "linear-gradient(135deg, #ffede1, #e8b4ff)";
+                    title.style.webkitBackgroundClip = "text";
+                    title.style.webkitTextFillColor  = "transparent";
+                    body.innerHTML = "Your biodata has been <strong style=\"color:#ffede1\">downloaded</strong> and successfully submitted to the UrbanMatch team.<br><br>We\'ll review it and reach out to you soon. Your perfect match could be just around the corner. 💜";
+                    btn.textContent = "Back to Home";
+
+                } else if (type === "failure") {
+                    icon.textContent = "⚠️";
+                    title.textContent = "Submission Incomplete";
+                    title.style.background = "none";
+                    title.style.webkitTextFillColor = "#fff";
+                    body.innerHTML = "Your biodata was <strong style=\"color:#ffede1\">downloaded successfully</strong> — it\'s saved on your device.<br><br>However, we weren\'t able to send it to our system. Please contact our support team and share your downloaded PDF directly.";
+                    btn.textContent = "Okay, Got It";
+
+                } else if (type === "pdf-error") {
+                    icon.textContent = "😔";
+                    title.textContent = "Something Went Wrong";
+                    title.style.background = "none";
+                    title.style.webkitTextFillColor = "#fff";
+                    body.innerHTML = "We couldn\'t generate your biodata PDF. This is usually a temporary issue.<br><br>Please try again in a moment. If the problem continues, refresh the page and re-enter your details.";
+                    btn.textContent = "Try Again";
+                }
+
+                modal.style.display = "flex";
+                btn.onclick = function () {
+                    modal.style.display = "none";
+                    if (typeof onClose === "function") onClose();
+                };
+            }
+
+            function resetFormToStart() {
+                const steps = document.querySelectorAll(".form-step");
+                steps.forEach(function(s, i) { s.classList.toggle("active", i === 0); });
+
+                var nextBtn = document.getElementById("next-btn");
+                var prevBtn = document.getElementById("prev-btn");
+                if (nextBtn) nextBtn.style.display = "none";
+                if (prevBtn) prevBtn.style.display = "none";
+
+                var form = document.getElementById("biodataForm");
+                if (form) form.reset();
+
+                window.scrollTo({ top: 0, behavior: "smooth" });
+            }
+
             document.getElementById("download-biodata").addEventListener("click", async () => {
 
                 const loader = document.getElementById("pdfLoader");
@@ -2452,26 +2659,37 @@
 
                 syncFields();
 
+                /* -------------------------------------------------
+                 * STEP 1: Generate + download PDF (isolated)
+                 * ------------------------------------------------- */
+                let pdfBlob = null;
+                let backendPdfBlob = null;
+
                 try {
-                    const pdfBlob = await generatePDF();
-                    const backendPdfBlob = await generateBackendPDF();
-
+                    pdfBlob = await generatePDF();
+                    backendPdfBlob = await generateBackendPDF();
                     downloadPDF(pdfBlob);
+                    console.log("✅ PDF generated and downloaded");
+                } catch (pdfErr) {
+                    console.error("❌ PDF generation failed:", pdfErr);
+                    loader.style.display = "none";
+                    showResultModal("pdf-error", null);
+                    return;
+                }
 
-                    // ✅ CALL WEBHOOK HERE
+                /* -------------------------------------------------
+                 * STEP 2: Backend upload (webhook + S3)
+                 * ------------------------------------------------- */
+                try {
                     await sendPDFWebhook();
-
                     await uploadPDFWebhook(pdfBlob, backendPdfBlob);
-
-                    console.log("✅ PDF + images sent successfully");
-
+                    console.log("✅ PDF + images sent to backend successfully");
                     loader.style.display = "none";
-
-                } catch (err) {
-                    console.error("❌ ERROR:", err);
-                    alert("Something went wrong");
-
+                    showResultModal("success", resetFormToStart);
+                } catch (uploadErr) {
+                    console.error("❌ Backend upload failed:", uploadErr);
                     loader.style.display = "none";
+                    showResultModal("failure", null);
                 }
             });
 
@@ -2578,6 +2796,15 @@
                         if (!valid) isValid = false;
                     }
                 });
+
+                // Photo step (step-06): ensure all 4 images are uploaded and valid (<5MB)
+                const activeStep = steps[currentStep];
+                if (activeStep && activeStep.classList.contains('step-06')) {
+                    const photosValid = typeof validatePhotos === 'function'
+                        ? validatePhotos(false)
+                        : false;
+                    if (!photosValid) isValid = false;
+                }
 
                 nextBtn.disabled = !isValid;
 
