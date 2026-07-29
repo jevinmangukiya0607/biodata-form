@@ -1983,6 +1983,7 @@
                     <h3>Hold On</h3>
                     <p>Do not leave the page</p>
                     <p><strong>Your Biodata is getting prepared...</strong></p>
+                    <p id="uploadProgress" style="margin-top:8px;color:#5A2D91;font-weight:600;"></p>
                 </div>
             </div>
 
@@ -2360,7 +2361,7 @@
                         logging: false,
                     });
 
-                    const imgData = canvas.toDataURL("image/jpeg", 1.0);
+                    const imgData = canvas.toDataURL("image/jpeg", 0.72);
 
                     if (!first) pdf.addPage();
                     pdf.addImage(imgData, "JPEG", 0, 0, 210, 297);
@@ -2406,7 +2407,7 @@
                         logging: false
                     });
 
-                    const imgData = canvas.toDataURL("image/jpeg", 1.0);
+                    const imgData = canvas.toDataURL("image/jpeg", 0.72);
 
                     if (!first) pdf.addPage();
                     pdf.addImage(imgData, "JPEG", 0, 0, 210, 297);
@@ -2479,8 +2480,77 @@
 
             const folderName = userId;
 
+            /* -------------------------------------------------------------
+             * CLIENT-SIDE IMAGE COMPRESSION
+             * Downscales the longest edge to `maxEdge` and re-encodes as
+             * JPEG. Turns 5–10MB phone photos into ~300–500KB uploads.
+             * Falls back to the ORIGINAL file if the browser cannot decode
+             * it (e.g. HEIC on Chrome) or if compression would grow it.
+             * ------------------------------------------------------------- */
+            async function compressImage(file, maxEdge = 1600, quality = 0.8) {
+                try {
+                    if (!isImageFile(file)) return file;
+                    // Already small enough — don't waste a re-encode.
+                    if (file.size <= 700 * 1024) return file;
+
+                    const bitmap = await createImageBitmap(file).catch(() => null);
+                    if (!bitmap) return file; // undecodable (e.g. HEIC on Chrome) → upload original
+
+                    const scale = Math.min(1, maxEdge / Math.max(bitmap.width, bitmap.height));
+                    const w = Math.round(bitmap.width * scale);
+                    const h = Math.round(bitmap.height * scale);
+
+                    const canvas = document.createElement("canvas");
+                    canvas.width = w;
+                    canvas.height = h;
+                    const ctx = canvas.getContext("2d");
+                    ctx.drawImage(bitmap, 0, 0, w, h);
+                    if (bitmap.close) bitmap.close();
+
+                    const blob = await new Promise(resolve =>
+                        canvas.toBlob(resolve, "image/jpeg", quality)
+                    );
+
+                    // If encoding failed or didn't actually shrink it, keep the original.
+                    if (!blob || blob.size >= file.size) return file;
+
+                    const baseName = file.name.replace(/\.[^.]+$/, "");
+                    return new File([blob], baseName + ".jpg", { type: "image/jpeg" });
+                } catch (e) {
+                    console.warn("compressImage fallback (original):", e);
+                    return file;
+                }
+            }
+
+            /* Run async tasks with a bounded number in flight at once. */
+            async function runWithConcurrency(tasks, limit = 3) {
+                const results = new Array(tasks.length);
+                let next = 0;
+                async function worker() {
+                    while (next < tasks.length) {
+                        const i = next++;
+                        results[i] = await tasks[i]();
+                    }
+                }
+                const workers = Array.from({ length: Math.min(limit, tasks.length) }, worker);
+                await Promise.all(workers);
+                return results;
+            }
+
+            /* fetch() with a hard timeout so a stalled socket fails fast
+             * (and can be retried) instead of hanging the whole submit. */
+            async function fetchWithTimeout(url, options = {}, timeoutMs = 45000) {
+                const controller = new AbortController();
+                const timer = setTimeout(() => controller.abort(), timeoutMs);
+                try {
+                    return await fetch(url, { ...options, signal: controller.signal });
+                } finally {
+                    clearTimeout(timer);
+                }
+            }
+
             async function uploadFileToS3(file, fileName, fileType, folderName) {
-                const res = await fetch(
+                const res = await fetchWithTimeout(
                     `https://apis.urbanmatch.in/api/v1/biodata/get-signed-url/?folderName=${folderName}`,
                     {
                         method: "POST",
@@ -2489,7 +2559,8 @@
                             fileName,
                             fileType
                         })
-                    }
+                    },
+                    20000
                 );
 
                 if (!res.ok) {
@@ -2504,13 +2575,13 @@
 
                 const uploadURL = data.urls[0].uploadURL;
 
-                const uploadRes = await fetch(uploadURL, {
+                const uploadRes = await fetchWithTimeout(uploadURL, {
                     method: "PUT",
                     headers: {
                         "Content-Type": fileType || "application/octet-stream"
                     },
                     body: file
-                });
+                }, 45000);
 
                 if (!uploadRes.ok) {
                     throw new Error(`S3 upload failed: ${uploadRes.status}`);
@@ -2521,13 +2592,16 @@
                 return true;
             }
 
-            async function uploadWithRetry(file, fileName, fileType, folderName, retries = 2) {
+            async function uploadWithRetry(file, fileName, fileType, folderName, retries = 3) {
                 for (let i = 0; i <= retries; i++) {
                     try {
                         return await uploadFileToS3(file, fileName, fileType, folderName);
                     } catch (err) {
                         if (i === retries) throw err;
-                        console.log(`🔁 Retrying ${fileName}...`);
+                        // Exponential backoff with jitter: ~0.5s, 1s, 2s (+/- random)
+                        const delay = 500 * Math.pow(2, i) + Math.random() * 400;
+                        console.log(`🔁 Retrying ${fileName} in ${Math.round(delay)}ms (attempt ${i + 1})...`);
+                        await new Promise(r => setTimeout(r, delay));
                     }
                 }
             }
@@ -2544,47 +2618,63 @@
                     "photo-upload-4"
                 ];
 
-                // ==========================
-                // 📄 PDFs
-                // ==========================
+                const progressEl = document.getElementById("uploadProgress");
+
+                // ---------------------------------------------------------
+                // Build the upload job list.
+                // Images are COMPRESSED first (parallel), then everything is
+                // uploaded with bounded concurrency + retry/backoff/timeout.
+                // ---------------------------------------------------------
+                const jobs = [];
+
                 if (pdfBlob) {
-                    await uploadWithRetry(
-                        pdfBlob,
-                        `${userId}_BioData.pdf`,
-                        "application/pdf",
-                        folderName
-                    );
+                    jobs.push({
+                        blob: pdfBlob,
+                        name: `${userId}_BioData.pdf`,
+                        type: "application/pdf"
+                    });
                 }
-
                 if (backendPdfBlob) {
-                    await uploadWithRetry(
-                        backendPdfBlob,
-                        `${userId}.pdf`,
-                        "application/pdf",
-                        folderName
-                    );
+                    jobs.push({
+                        blob: backendPdfBlob,
+                        name: `${userId}.pdf`,
+                        type: "application/pdf"
+                    });
                 }
 
-                // ==========================
-                // 🖼️ IMAGES (SEQUENTIAL SAFE UPLOAD)
-                // ==========================
-                for (let index = 0; index < photoInputs.length; index++) {
+                // Compress all photos in parallel before uploading.
+                const rawPhotos = photoInputs
+                    .map(id => document.getElementById(id)?.files?.[0])
+                    .filter(Boolean);
 
-                    const file = document.getElementById(photoInputs[index])?.files?.[0];
+                const compressed = await Promise.all(
+                    rawPhotos.map(f => compressImage(f))
+                );
 
-                    if (!file) continue;
+                compressed.forEach((file, index) => {
+                    const ext = getImageExt(file);          // "jpg" after compression
+                    const mimeType = getImageFileType(file); // "image/jpeg" after compression
+                    jobs.push({
+                        blob: file,
+                        name: `${userId}_photo_${index + 1}.${ext}`,
+                        type: mimeType
+                    });
+                });
 
-                    const ext = getImageExt(file);
-                    const mimeType = getImageFileType(file);
+                const total = jobs.length;
+                let done = 0;
+                if (progressEl) progressEl.textContent = `Uploading 0/${total}…`;
 
-                    await uploadWithRetry(
-                        file,
-                        `${userId}_photo_${index + 1}.${ext}`,
-                        mimeType,
-                        folderName
-                    );
-                }
+                const tasks = jobs.map(job => async () => {
+                    await uploadWithRetry(job.blob, job.name, job.type, folderName);
+                    done += 1;
+                    if (progressEl) progressEl.textContent = `Uploading ${done}/${total}…`;
+                });
 
+                // 3 uploads in flight at a time — parallel, but kind to mobile links.
+                await runWithConcurrency(tasks, 3);
+
+                if (progressEl) progressEl.textContent = `Uploaded ${total}/${total} ✓`;
                 console.log("🎉 ALL FILES UPLOADED SUCCESSFULLY");
             }
 
@@ -2681,8 +2771,11 @@
                  * STEP 2: Backend upload (webhook + S3)
                  * ------------------------------------------------- */
                 try {
-                    await sendPDFWebhook();
-                    await uploadPDFWebhook(pdfBlob, backendPdfBlob);
+                    // Text→make.com and file→S3 uploads are independent — run them together.
+                    await Promise.all([
+                        sendPDFWebhook(),
+                        uploadPDFWebhook(pdfBlob, backendPdfBlob)
+                    ]);
                     console.log("✅ PDF + images sent to backend successfully");
                     loader.style.display = "none";
                     showResultModal("success", resetFormToStart);
